@@ -1,0 +1,11 @@
+package ${outputor.param.packageNameDao}.impl.oracle;
+
+import org.springframework.stereotype.Repository;
+
+/**
+* Dao ${outputor.param.databaseTypeClassName} 实现
+*/
+@Repository
+public class ${className}${outputor.param.databaseTypeClassName}Dao extends ${className}AbstractDao implements ${className}Dao {
+
+}

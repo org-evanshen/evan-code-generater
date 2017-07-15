@@ -1,0 +1,56 @@
+
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class ${outputor.className}MapperTest extends TestSupportForDb   {	
+	private static final Logger log = LoggerFactory.getLogger(${outputor.className}Mapper.class);
+	
+	@Autowired
+	private ${outputor.className}Mapper ${outputor.objectName}Mapper;
+	
+	@Test
+	public void testLoad() {
+		${outputor.className} ${outputor.objectName} = ${outputor.objectName}Mapper.load(1L);
+		log.info(${outputor.objectName}.toString());
+	}
+
+	@Test
+	public void testInsert() {
+		${outputor.className} ${outputor.objectName} = new ${outputor.className}();
+		
+		${outputor.objectName}Mapper.insert(${outputor.objectName});
+	}
+
+	@Test
+	public void testUpdate() {
+		${outputor.className} ${outputor.objectName} = new ${outputor.className}(1L);
+		
+		${outputor.objectName}Mapper.update(${outputor.objectName});
+	}
+
+	@Test
+	public void testUpdateStatus() {
+		${outputor.objectName}Mapper.updateStatus(1L, -1);
+	}
+
+	@Test
+	public void testDelete() {
+		${outputor.objectName}Mapper.delete(1L);
+	}
+
+	@Test
+	public void testQueryList() {
+		${outputor.className}Query query = new ${outputor.className}Query();
+		
+		${outputor.objectName}Mapper.queryList(query);
+	}
+
+	@Test
+	public void testQueryCount() {
+		${outputor.className}Query query = new ${outputor.className}Query();
+		
+		${outputor.objectName}Mapper.queryCount(query);
+	}	
+}

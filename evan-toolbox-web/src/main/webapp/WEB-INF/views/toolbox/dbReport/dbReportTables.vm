@@ -1,0 +1,61 @@
+#set($tdStyle=" style='font-size:13px;border-top:solid 1px #000000;border-right:solid 1px #000000;' ")
+#set($tdStyleLast=" style='font-size:13px;border-top:solid 1px #000000;' ")
+#set($thStyle=" style='font-size:13px;border-right:solid 1px #000000;' ")
+#set($thStyleLast=" style='font-size:13px;' ")
+#set($tableNameStyle=" style='' ")
+<style>
+	##.table{font-size:13px; }
+</style>	
+<div class="title">
+	Database Report
+</div>
+#foreach($table in $tables)
+	<br/>
+	<div><b>表$!{table.tableName} 
+			--$!{table.tableComments}
+	</b></div>	
+	<table class="table" cellspacing="0" style="border-collapse:collapse;width:650px;border:solid 2px #000000;">
+		<tr bgcolor="#dddddd" >
+			<th width="6%" $thStyle>序号
+			</th>
+			<th  width="30%" $thStyle>字段
+			</th>
+			<th  width="20%" $thStyle>数据类型
+			</th>
+			<th  width="6%" $thStyle>主键
+			</th>
+			<th $thStyleLast>注释
+			</th>
+		</tr>
+		#set($i=1)
+		#foreach($col in $table.columns)
+		<tr>
+			<td align="center" ${tdStyle}>
+				$i
+			</td>
+			<td ${tdStyle}>
+				$!col.columnName
+			</td>
+			<td  ${tdStyle}>
+				#if("$!col.length"=="")
+					$!col.dbDataType
+				#else
+					$!{col.dbDataType}
+					#if($col.length && ${col.length}!=0) 
+					 	($!{col.length})
+					#end
+				#end
+			</td ${tdStyle}>
+			<td align="center" ${tdStyle}>
+				#if($!col.isPk==1)
+					是
+				#end
+			</td>
+			<td ${tdStyleLast}>
+				$!col.comment
+			</td>
+		</tr>
+		#set($i=$i+1)
+		#end
+	</table>
+#end

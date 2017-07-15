@@ -1,0 +1,45 @@
+package ${outputor.param.packageNameDao};
+
+#*import java.io.Serializable;
+import java.util.List;
+
+import org.evanframework.domain.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;*#
+
+@Repository
+public class ${outputor.className}Dao  {
+	#*
+	@Autowired
+	private ${outputor.className}Mapper ${outputor.objectName}Mapper;
+	
+	public ${outputor.className} load(${outputor.pkJavaDataType} id) {
+		return ${outputor.objectName}Mapper.load(id);
+	}
+
+	public void insert(${outputor.className} ${outputor.objectName}) {
+		${outputor.objectName}Mapper.insert(${outputor.objectName});
+	}
+
+	public void update(${outputor.className} ${outputor.objectName}) {
+		${outputor.objectName}Mapper.update(${outputor.objectName});
+	}
+
+	public void updateStatus(${outputor.pkJavaDataType} id, Serializable status) {
+		${outputor.objectName}Mapper.updateStatus(id, status);
+	}
+
+	public void delete(${outputor.pkJavaDataType} id) {
+		${outputor.objectName}Mapper.delete(id);
+	}
+
+	public List<${outputor.className}> queryList(${outputor.className}Query ${outputor.objectName}Query) {
+		return ${outputor.objectName}Mapper.queryList(${outputor.objectName}Query);
+	}
+
+	public PageResult<${outputor.className}> queryPage(${outputor.className}Query ${outputor.objectName}Query) {
+		List<${outputor.className}> data = ${outputor.objectName}Mapper.queryList(${outputor.objectName}Query);
+		int recordCount = ${outputor.objectName}Mapper.queryCount(${outputor.objectName}Query);
+		return PageResult.create(${outputor.objectName}Query, data, recordCount);
+	}*#
+}

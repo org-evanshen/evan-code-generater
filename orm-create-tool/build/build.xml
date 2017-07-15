@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ormGeneratorBuild" default="build" basedir=".">
+
+	<property name="author" value="evan.shen" />
+	<property name="target.dir" value="../target" />
+	<property name="target.file" value="orm-generator.zip" />	
+	
+	<target name="build" description="Orm Generating Build" >
+		<copy todir="${target.dir}/lib" preservelastmodified="true">			
+			<fileset dir="${target.dir}">
+				<include name="orm-create-tool*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${target.dir}" preservelastmodified="true">
+			<fileset dir=".">
+				<include name="orm-generator.*" />
+				<include name="template/*.vm" />
+			</fileset>
+		</copy>
+		<zip destfile="${target.dir}/${target.file}">
+			<fileset dir="${target.dir}">
+				<include name="orm-generator.*" />
+				<include name="template/*.vm" />				
+				<include name="lib/*.jar" />
+				<exclude name="lib/ant*.jar" />						
+			</fileset>			
+		</zip>
+	</target>	
+</project>

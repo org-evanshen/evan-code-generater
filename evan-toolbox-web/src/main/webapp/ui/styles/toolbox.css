@@ -1,0 +1,25 @@
+div,ul,ol,li,form,iframe,fieldset,input,textarea,p,select,table,th,td,span{margin:0;padding:0;font:13px/1.5 "Microsoft Yahei",Tahoma,Arial,Helvetica,STHeiti;font:12px/1.5\9 Tahoma,宋体\9;}
+
+.input{border-radius:3px;border:#ccc 1px solid;padding:3px;background-image:url(../images/text-bg.gif);background-repeat:repeat-x;BACKGROUND-POSITION-Y:top;}
+.inputFocus{border-color:#75b8ec;/*background-color:#f5f5f5*/}
+
+div.error,label.error,font.error,b.error{padding:2px 10px 2px 23px;border:1px solid #FF8080;background:url(../images/msg_bg.png) no-repeat 3px 2px;background-color:#FFF2F2;color:red;margin-left:4px;font-weight:normal;}
+input.error{border:dotted 1px red;}
+
+.clearing{border-top:1px solid transparent !important;clear:both;visibility:hidden;}
+.float-left{float:left;}
+
+.table1{}
+.table1 th{text-align:right;vertical-align: top;padding-top:10px;}
+.table1 td{padding:8px;vertical-align: top;}
+
+.msg-success,.msg-error,.msg-warn,.msg-info {text-align:left; height:auto; overflow:hidden; border-radius:5px; padding: 4px 10px 4px 34px;clear:both;}
+.msg-error {color: #D84600;border: 1px solid #FEC799;background: #FEF0D0 url(../images/icn_error.gif) 0 7px no-repeat;}
+.msg-error div{color: #D84600;}
+.msg-success {color: #2F5724;border: 1px solid #6BC98A;background: #E0FEE9 url(../images/icn_success.gif) 0 7px no-repeat;}
+.msg-success div{color: #2F5724;}
+.msg-info{border:1px solid #FEC799;background:#fdfdd3 url(../images/ico-info.png) no-repeat 10px 7px;color: #fd5b03;}
+.msg-info div{color: #fd5b03;}
+.msg-success div,.msg-error div,.msg-warn div,.msg-info div{height:100%;overflow:hidden; float:left; line-height: 170%;}
+.msg-success sup,.msg-error sup,.msg-warn sup,.msg-info sup{height:100%;overflow:hidden;float: right;cursor: pointer;color:#666;}
+

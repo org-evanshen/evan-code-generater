@@ -1,0 +1,9 @@
+
+import java.io.Serializable;
+
+/**
+*$!{outputor.comment}
+*/
+public class ${outputor.className}List extends ArrayList<${outputor.className}> implements Serializable {
+	private static final long serialVersionUID = ${outputor.serialVersionUID}3L;
+}

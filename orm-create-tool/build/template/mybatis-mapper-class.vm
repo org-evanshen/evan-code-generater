@@ -1,0 +1,28 @@
+package ${outputor.param.packageNameMapper};
+
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import java.io.Serializable;
+
+public interface ${outputor.className}Mapper  {
+	/***/
+	${outputor.className} load(${outputor.pkJavaDataType} id);
+
+	/***/
+	void insert(${outputor.className} ${outputor.ObjectName});
+
+	/***/
+	void update(${outputor.className} ${outputor.ObjectName});
+
+	/***/
+	void updateStatus(@Param("id") ${outputor.pkJavaDataType} id, @Param("status") Serializable status);
+
+	/***/
+	void delete(${outputor.pkJavaDataType} id);
+
+	/***/
+	List<${outputor.className}> queryList(${outputor.className}Query ${outputor.ObjectName}Query);
+
+	/***/
+	int queryCount(${outputor.className}Query ${outputor.ObjectName}Query);
+}

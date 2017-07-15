@@ -1,0 +1,35 @@
+#set($objectName=$outputor.objectName)
+#set($columnNotPKs=$outputor.columnNotPKs)
+
+##加载客户端资源
+#renderResourcesValidate()
+#renderResourcesDatePicker()
+##renderResourcesImageUploador()##swf图片上传器
+##renderResourcesHtmlEditor()##Html editor
+
+\#set($screen_jsArray=["${objectName}/${objectName}_form.js"])
+<div class="formBox">
+    <h3>
+		<i></i><span>$screen_title</span>
+		<div style="float:right;"><a href="listb.htm"><< 返回列表</a></div>
+	</h3>	 
+    <form method="post" >		
+        <div class="content">
+        	<input name="id" id="${objectName}Id" type="hidden" value="$!${objectName}.id"/>        	
+            <table class="c2">            	
+            	#foreach($column in $columnNotPKs)
+				<tr>
+            		<th>$!{column.comment}</th>
+        			<td>			
+        				<input name="${column.fieldName}" maxlength="${column.Length}" class="required #if("$!column.jdbcDataType"=="DECIMAL")number#end" type="text" value="$!{${objectName}.${column.fieldName}}"/>
+        			</td>
+            	</tr>
+				#end
+            </table>
+		</div>
+		<div class="form-but">
+			<button type="submit" class="button-s4">提交</button>
+			<button type="button" class="button-s4" onclick="javascript:history.back(-1);">取消</button>
+		</div>
+	</form>	
+</div>

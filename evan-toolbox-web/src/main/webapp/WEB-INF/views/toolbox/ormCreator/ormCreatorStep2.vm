@@ -1,0 +1,35 @@
+#parse("/pages/commons/common.vm")
+<head>
+	#parse("/pages/commons/formResource.vm")
+	<script type="text/javascript" src="${ctx}/js/toolbox/ormCreator/ormCreatorStep2.js"></script>
+</head>
+<body>
+	<div class="title">
+		Orm Creator -- Step2
+	</div>
+	<br/>
+	<div class="msg">
+		Please select tables these need creator!
+	</div>
+	<br/>
+	<div class="msg">
+		<input type="checkbox"  id="selectAll"/>
+		<label for="selectAll">all tables</label>
+	</div>
+	<br/>
+	<form method="post" class="form">
+		<input type="hidden" name="paramJson" value="$!{paramJson}" />
+		<div style="width:600px;padding-left:20px">
+			#foreach($table in $tables)
+			<div style="width:200px;float:left">
+				<input type="checkbox" name="tables" id="${table}" value="${table}"/>
+				<label for="${table}">${table}</label>
+			</div>
+			#end
+		</div>
+		<div class="clearing"></div>
+		<input type="button" id="btnBack" value=" back " class="submit" />
+		&nbsp;&nbsp;
+		<input type="submit" id="btnSubmit" value=" ok, create now "/>
+	</form>	
+</body>

@@ -1,0 +1,82 @@
+#parse("/pages/commons/common.vm")
+<head>
+		#parse("/pages/commons/formResource.vm")
+		<script type="text/javascript" src="${ctx}/js/toolbox/ormCreator/ormCreatorStep1.js"></script>
+</head>
+<body>
+	<div class="title">
+		Orm Creator -- Step1
+	</div>
+	<br/>
+	<div class="msg">
+		Please input parameters!
+	</div>
+	<form method="post" class="form" >
+    	##stoken()
+    	
+		#parse("/pages/commons/formError.vm")
+		<table >
+			<tr>
+        		<th>orm type</th>
+        		<td>*</td>
+        		<td>#sselect ("name=param.ormType" "id=ormType" "list=#{'':'[请选择]','mybatis':'mybatis','jdbc':'jdbc'}" )</td>
+        		<td></td>
+        	</tr>
+			<tr>
+        		<th>db url</th>
+        		<td>*</td>
+        		<td>#stextfield ("name=param.dbUrl" "id=dbUrl" "maxlength=40" "size=30")</td>
+        		<td></td>
+        	</tr>
+        	<tr>
+        		<th>db port</th>
+        		<td>*</td>
+        		<td>#stextfield ("name=param.dbPort" "id=dbPort" "maxlength=32" "size=30" "value=1521")</td>
+        		<td></td>
+        	</tr>
+        	<tr>
+        		<th>db sid</th>
+        		<td>*</td>
+        		<td>#stextfield ("name=param.dbSid" "id=dbSid" "maxlength=32" "size=30")</td>
+        		<td></td>
+        	</tr>
+        	<tr>
+        		<th>db user</th>
+        		<td>*</td>
+        		<td>#stextfield ("name=param.dbUser" "id=dbUser" "maxlength=32" "size=30")</td>
+				<td></td>
+        	</tr>
+        	<tr>
+        		<th>db password</th>
+        		<td>*</td>
+        		<td>#stextfield ("name=param.dbPassword" "id=dbPassword" "maxlength=32" "size=30")</td>
+        		<td></td>
+        	</tr>
+        	<tr>
+        		<th>po package name</th>
+        		<td>*</td>
+        		<td>#stextfield ("name=param.packageNamePo" "id=packageNamePo" "maxlength=32" "size=30")</td>
+        		<td></td>
+        	</tr>
+        	<tr>
+        		<th>dao package name</th>
+        		<td>*</td>
+        		<td>#stextfield ("name=param.packageNameDao" "id=packageNameDao" "maxlength=32" "size=30")</td>
+        		<td></td>
+        	</tr>
+        	<tr>
+        		<th>basePo name</th>
+        		<td>*</td>
+        		<td>#stextfield ("name=param.basePoName" "id=basePoName" "maxlength=32" "size=30")</td>
+        		<td></td>
+        	</tr>
+        		<tr>
+        		<th>baseDao name</th>
+        		<td>*</td>
+        		<td>#stextfield ("name=param.baseDaoName" "id=baseDaoName" "maxlength=80" "size=30")</td>
+        		<td></td>
+        	</tr>        	
+		</table>
+		<input type="submit" value=" next step ">
+    </form>
+</body>

@@ -1,0 +1,34 @@
+非常抱歉,您访问的页面出错了
+<head >
+	<script type="text/javascript">
+		jQuery(function(){
+			var errorDetail = jQuery('#errorDetail');
+			errorDetail.hide();
+			
+			var showDetailLink = jQuery('#showDetail');
+			showDetailLink.html('查看详细信息');
+			
+			jQuery('#showDetail').click(function(){
+				if(errorDetail.is(':hidden')){
+					errorDetail.show('fast');
+					showDetailLink.html('关闭详细信息');
+				}else{
+					errorDetail.hide('fast');
+					showDetailLink.html('查看详细信息');
+				}
+			});
+		})
+    </script>
+</head>
+<div id="i_body">	
+	<div class="right">
+    	<div class="msg msg_warn">
+    		非常抱歉,您访问的页面出错了！<br/>
+			错误原因:$!{exception.message} <a href="#" id="showDetail">1</a>
+    	</div>
+		<div id="errorDetail" >
+			$!{exceptionStack}
+		</div>
+    </div>
+	 <br class="clear" />
+</div>

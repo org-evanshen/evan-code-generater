@@ -1,0 +1,5 @@
+
+@Repository
+public class ${outputor.className}Dao extends ${outputor.baseDaoName}<${outputor.className},${outputor.pkJavaDataType}> {
+	
+}
