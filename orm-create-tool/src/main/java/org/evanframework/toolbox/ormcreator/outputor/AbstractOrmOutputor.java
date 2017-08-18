@@ -134,9 +134,9 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
 		str = mergeTemplateToString(template, mapOutputor);
 		write("list", outputor.getClassName() + "List.java", str);
 
-		template = ormTemplatePath + "common-dto.vm";
+		template = ormTemplatePath + "common-response.vm";
 		str = mergeTemplateToString(template, mapOutputor);
-		write("dto", outputor.getClassName() + "DTO.java", str);
+		write("dto", outputor.getClassName() + "Response.java", str);
 
         template = ormTemplatePath + "common-columns.vm";
         str = mergeTemplateToString(template, mapOutputor);
