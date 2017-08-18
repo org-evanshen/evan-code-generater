@@ -123,7 +123,6 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
 
         String template;
         template = ormTemplatePath + "common-model.vm";
-
         String str = mergeTemplateToString(template, mapOutputor);
         write("model", outputor.getClassName() + ".java", str);
 
@@ -131,13 +130,13 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
         str = mergeTemplateToString(template, mapOutputor);
         write("query", outputor.getClassName() + "Query.java", str);
 
-//		template = ormTemplatePath + "common-bo-list.vm";
-//		str = mergeTemplateToString(template, mapOutputor);
-//		write("list", outputor.getClassName() + "List.java", str);
-//
-//		template = ormTemplatePath + "common-dto.vm";
-//		str = mergeTemplateToString(template, mapOutputor);
-//		write("bo", outputor.getClassName() + ".java", str);
+		template = ormTemplatePath + "common-list.vm";
+		str = mergeTemplateToString(template, mapOutputor);
+		write("list", outputor.getClassName() + "List.java", str);
+
+		template = ormTemplatePath + "common-dto.vm";
+		str = mergeTemplateToString(template, mapOutputor);
+		write("dto", outputor.getClassName() + "DTO.java", str);
 
         template = ormTemplatePath + "common-columns.vm";
         str = mergeTemplateToString(template, mapOutputor);

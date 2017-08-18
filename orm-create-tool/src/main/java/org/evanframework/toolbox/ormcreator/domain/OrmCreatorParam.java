@@ -38,6 +38,8 @@ public class OrmCreatorParam {
 	private String packageNameDao;
 	private String packageNameMapper;
 	private String packageNameQuery;
+	private String packageNameList;
+	private String packageNameDto;
 	private String basePoName = "BaseDomain";
 	//private String baseQueryClass = "AbstractQuery";
 	//private String queryInterface = "Query";
@@ -421,6 +423,22 @@ public class OrmCreatorParam {
 
 	public void setColumnUpdateTime(String columnUpdateTime) {
 		this.columnUpdateTime = columnUpdateTime;
+	}
+
+	public String getPackageNameList() {
+		return packageNameList;
+	}
+
+	public void setPackageNameList(String packageNameList) {
+		this.packageNameList = packageNameList;
+	}
+
+	public String getPackageNameDto() {
+		return packageNameDto;
+	}
+
+	public void setPackageNameDto(String packageNameDto) {
+		this.packageNameDto = packageNameDto;
 	}
 
 	@Override

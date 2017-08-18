@@ -44,6 +44,8 @@ public class OrmGeneratorMain {
         param.setPackageNameQuery(props.getProperty("package.name.query"));
         param.setPackageNameDao(props.getProperty("package.name.dao"));// DAO包名
         param.setPackageNameMapper(props.getProperty("package.name.mapper"));// Mybatis Mapper包名
+        param.setPackageNameDto(props.getProperty("package.name.dto"));// dto包名
+        param.setPackageNameList(props.getProperty("package.name.list"));// list包名
 
         String tmp = props.getProperty("column.name.createtime");
         if (StringUtils.isNotBlank(tmp)) {

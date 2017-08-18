@@ -27,21 +27,23 @@ public class OrmCreatorExecutor {
 		param.setDatabaseType(DatabaseType.mysql);
 		// param.setJdbcUrl("jdbc:mysql://6.14.1.2:3306/information_schema");
 
-		param.setJdbcUrl("jdbc:mysql://192.168.0.199:3306/information_schema");
+		param.setJdbcUrl("jdbc:mysql://192.168.0.150:3306/information_schema");
 		// param.setJdbcUrl("jdbc:mysql://192.168.0.247:3306/information_schema");
 		param.setJdbcUser("root");
-		param.setJdbcPassword("xrw0199");
-		param.setDatabaseSchema("yourong");
+		param.setJdbcPassword("MiZhi001");
+		param.setDatabaseSchema("evan_demo");
 
 		// param.setDatabaseType(DatabaseType.oracle);
 		// param.setJdbcUrl("jdbc:oracle:thin:@localhost:1521:orcl");
 		// param.setJdbcUser("evan_base");
 		// param.setJdbcPassword("evan_base");
 
-		param.setPackageNameDao("org.evanframework.base.dao");// DAO包名
-		param.setPackageNameMapper("org.evanframework.base.mappers");// DAO包名
-		param.setPackageNamePo("org.evanframework.base.domain.entity");// Po包名
-		param.setPackageNameQuery("org.evanframework.base.domain.query");
+		param.setPackageNameDao("com.mizhi.btbs.baseservice.domain.dao");// DAO包名
+		param.setPackageNameMapper("com.mizhi.btbs.baseservice.domain.mapper");// DAO包名
+		param.setPackageNamePo("com.mizhi.btbs.baseservice.domain.domain.model");// Po包名
+		param.setPackageNameQuery("com.mizhi.btbs.baseservice.domain.domain.query");
+		param.setPackageNameDto("com.mizhi.btbs.baseservice.domain.domain.dto");// dto包名
+		param.setPackageNameList("com.mizhi.btbs.baseservice.domain.domain.list");// list包名
 		// param.setPrefixRemove("ztzq");
 		param.setOutDir("orm-create-tool/target/ormoutput");
 
@@ -49,8 +51,8 @@ public class OrmCreatorExecutor {
 
 		// 生成的表 可选 不提供该参数则生成全部表
 		List<String> tables = new ArrayList<String>();
-		tables.add("uc_member");
-		tables.add("uc_member_info");
+		tables.add("pub_picture");
+		tables.add("pub_attach");
 		param.setTables(tables);
 		OrmCreator ormCreator = new OrmCreator();
 		ormCreator.create(param);
