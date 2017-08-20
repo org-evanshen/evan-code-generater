@@ -116,12 +116,19 @@
             					<foreach collection="${fieldName}Array" index="index" item="item" open="(" separator="," close=")">#{item}
             					</foreach>
             				</when>
-            				<otherwise>
+            				##<otherwise>
 								##<if test="!i">					
-									and ${tableAlias}.${columnName} > 0
+									##and ${tableAlias}.${columnName} > 0
 								##</if>
-            				</otherwise>
+            				##</otherwise>
             			</choose>
+					#elseif(${fieldName}=="isDeleted")
+						<choose>
+                            <choose>
+                                <when test="isDeleted == null">and ${tableAlias}.is_deleted=0</when>
+                                <otherwise>and ${tableAlias}.is_deleted = #{isDeleted}</otherwise>
+                            </choose>
+						</choose>
 					#elseif("$dataType"=="BigDecimal")
 						<if test="${fieldName}From != null">and ${tableAlias}.${columnName} >= #{${fieldName}From}</if>
 						<if test="${fieldName}To != null"><![CDATA[and ${tableAlias}.${columnName} <= #{${fieldName}To}]]></if>
