@@ -17,6 +17,9 @@ public interface ${outputor.className}Mapper  {
 	/***/
 	void updateStatus(@Param("id") ${outputor.pkJavaDataType} id, @Param("status") Serializable status);
 
+    /***/
+    void updateIsDeleted(@Param("id") ${outputor.pkJavaDataType} id, @Param("isDeleted") int status);
+
 	/***/
 	void delete(${outputor.pkJavaDataType} id);
 

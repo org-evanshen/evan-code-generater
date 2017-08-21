@@ -51,7 +51,7 @@
 		#end			
 		#foreach($column in $outputor.columnNotPKs)
 			#if(${column.fieldName}=="isDeleted")
-				0
+				,0
 			#elseif("${column.columnName}"=="${param.columnCreateTime}" || "${column.columnName}"=="${param.columnUpdateTime}" )
 				##if($velocityCount!=1),#end##
 ##if($param.databaseType == "oracle")sysdate#elseif($param.databaseType == "mysql")now()#end
@@ -128,10 +128,8 @@
             			</choose>
 					#elseif(${fieldName}=="isDeleted")
 						<choose>
-                            <choose>
-                                <when test="isDeleted == null">and ${tableAlias}.is_deleted=0</when>
-                                <otherwise>and ${tableAlias}.is_deleted = #{isDeleted}</otherwise>
-                            </choose>
+                            <when test="isDeleted == null">and ${tableAlias}.is_deleted=0</when>
+                            <otherwise>and ${tableAlias}.is_deleted = #{isDeleted}</otherwise>
 						</choose>
 					#elseif("$dataType"=="BigDecimal")
 						<if test="${fieldName}From != null">and ${tableAlias}.${columnName} >= #{${fieldName}From}</if>
@@ -211,6 +209,10 @@ ${tableAlias}.${column.columnName}##
 	<update id="updateStatus" parameterType="${objectName}">		
 		update ${tableName} set status=#{status} where #foreach($column in $outputor.columnPKs) #if($velocityCount!=1) and #end ${column.columnName}=#{${column.fieldName}} #end
 	</update>
+
+    <update id="updateIsDeleted" parameterType="${objectName}">
+        update ${tableName} set is_deleted=#{isDeleted} where #foreach($column in $outputor.columnPKs) #if($velocityCount!=1) and #end ${column.columnName}=#{${column.fieldName}} #end
+    </update>
 	
 	#if($outputor.pkCount == 1)
     	<delete id="delete" parameterType="${outputor.pkIbatisDataType}">

@@ -26,13 +26,13 @@ public class OrmCreatorExecutor {
 
 		param.setDatabaseType(DatabaseType.mysql);
 
-//		param.setJdbcUrl("jdbc:mysql://192.168.0.150:3306/information_schema?useSSL=false");
-//		param.setJdbcUser("root");
-//		param.setJdbcPassword("MiZhi001");
-
-		param.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/information_schema?useSSL=false");
+		param.setJdbcUrl("jdbc:mysql://192.168.0.150:3306/information_schema?useSSL=false");
 		param.setJdbcUser("root");
-		param.setJdbcPassword("Shen0001");
+		param.setJdbcPassword("MiZhi001");
+
+//		param.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/information_schema?useSSL=false");
+//		param.setJdbcUser("root");
+//		param.setJdbcPassword("Shen0001");
 
 		param.setDatabaseSchema("btbs_user");
 
@@ -41,8 +41,8 @@ public class OrmCreatorExecutor {
 		// param.setJdbcUser("evan_base");
 		// param.setJdbcPassword("evan_base");
 
-		param.setPackageNameDao("com.mizhi.btbs.userservice.domain.dao");// DAO包名
-		param.setPackageNameMapper("com.mizhi.btbs.userservice.domain.mapper");// DAO包名
+		param.setPackageNameDao("com.mizhi.btbs.userservice.data.dao");// DAO包名
+		param.setPackageNameMapper("com.mizhi.btbs.userservice.data.mapper");// mapper包名
 		param.setPackageNamePo("com.mizhi.btbs.userservice.domain.domain.model");// Po包名
 		param.setPackageNameQuery("com.mizhi.btbs.userservice.domain.domain.query");
 		param.setPackageNameDto("com.mizhi.btbs.userservice.domain.domain.dto");// dto包名
