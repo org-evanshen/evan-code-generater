@@ -25,12 +25,15 @@ public class OrmCreatorExecutor {
 		// param.setBaseDaoName("IbatisDao");
 
 		param.setDatabaseType(DatabaseType.mysql);
-		// param.setJdbcUrl("jdbc:mysql://6.14.1.2:3306/information_schema");
 
-		param.setJdbcUrl("jdbc:mysql://192.168.0.150:3306/information_schema");
-		// param.setJdbcUrl("jdbc:mysql://192.168.0.247:3306/information_schema");
+//		param.setJdbcUrl("jdbc:mysql://192.168.0.150:3306/information_schema?useSSL=false");
+//		param.setJdbcUser("root");
+//		param.setJdbcPassword("MiZhi001");
+
+		param.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/information_schema?useSSL=false");
 		param.setJdbcUser("root");
-		param.setJdbcPassword("MiZhi001");
+		param.setJdbcPassword("Shen0001");
+
 		param.setDatabaseSchema("btbs_user");
 
 		// param.setDatabaseType(DatabaseType.oracle);

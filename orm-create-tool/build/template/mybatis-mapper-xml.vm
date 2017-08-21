@@ -31,7 +31,9 @@
     		#end
 		#end		
 		#foreach($column in $outputor.columnNotPKs)
-			#if("${column.columnName}"=="${param.columnCreateTime}" || "${column.columnName}"=="${param.columnUpdateTime}" )
+			#if(${column.fieldName}=="isDeleted")
+                ,is_deleted
+			#elseif("${column.columnName}"=="${param.columnCreateTime}" || "${column.columnName}"=="${param.columnUpdateTime}" )
 				,${column.columnName}
 			#else
 				<if test="${column.fieldName} != null">,$column.columnName</if>
@@ -48,7 +50,9 @@
     		#end
 		#end			
 		#foreach($column in $outputor.columnNotPKs)
-			#if("${column.columnName}"=="${param.columnCreateTime}" || "${column.columnName}"=="${param.columnUpdateTime}" )
+			#if(${column.fieldName}=="isDeleted")
+				0
+			#elseif("${column.columnName}"=="${param.columnCreateTime}" || "${column.columnName}"=="${param.columnUpdateTime}" )
 				##if($velocityCount!=1),#end##
 ##if($param.databaseType == "oracle")sysdate#elseif($param.databaseType == "mysql")now()#end
 			    ##,<include refid="common.now" />
