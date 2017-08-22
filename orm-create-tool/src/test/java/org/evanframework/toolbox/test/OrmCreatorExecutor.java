@@ -26,7 +26,7 @@ public class OrmCreatorExecutor {
 
 		param.setDatabaseType(DatabaseType.mysql);
 
-		param.setJdbcUrl("jdbc:mysql://192.168.0.150:3306/information_schema?useSSL=false");
+		param.setJdbcUrl("jdbc:mysql://192.168.0.109:3306/information_schema?useSSL=false");
 		param.setJdbcUser("root");
 		param.setJdbcPassword("MiZhi001");
 
