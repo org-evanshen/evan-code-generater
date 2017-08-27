@@ -1,27 +1,20 @@
 #set($objectName=$outputor.objectName)
 #set($columnNotPKs=$outputor.columnNotPKs)
 
-#renderResourcesDatePicker()
-#renderResourcesList()
-
-\#set($screen_jsArray=["${objectName}/${objectName}_list.js"])
-\#set($thisActionUrl="index.htm")
-\#set($screen_title="")
-<div class="searchBox"> 
-	<form method="get" id="form_search" action="$thisActionUrl">
+<div class="searchBox">
+	<form method="get" id="form_search">
 		<h5><span>搜索</span></h5>
-		#set($pageTag="page")
 		<table>
 			<tr>
 				<th>:</th>
-                <td><input name="aa" type="text" value='$!${pageTag}.get("aa")'/></td>
+                <td><input name="aa" type="text" v-model=""/></td>
 				<th>:</th>
-				<td>#formSelect({"name":"bb","dictGroup":"sex","selectedValue":$!page.get("bb")},"style='width:100px;'")</td>
+				<td><select></select></td>
 				<th>:</th>
-				<td><input name="modifyFrom" class="inp-w70" type="text" value='$!${pageTag}.get("modifyFrom")'  dateISO="true" onclick="WdatePicker()">
-                    - <input name="modifyTo" class="inp-w70" type="text" value='$!${pageTag}.get("modifyTo")'  dateISO="true"  onClick="WdatePicker()"></td>
+				<td><input name="modifyFrom" class="inp-w70" type="text" v-model=""  dateISO="true" onclick="WdatePicker()">
+                    - <input name="modifyTo" class="inp-w70" type="text" v-model=""  dateISO="true"  onclick="WdatePicker()"></td>
 				<th>:</th>
-				<td>#formCheckboxList({"name":"cc","dictGroup":"","selectedValue":$!page.get("cc")})</td>
+				<td></td>
 			</tr>
 			<tr>
 				<th></th>
@@ -32,7 +25,7 @@
 				<td></td>
 				<td >					
 					<input type="submit" id="btn_search" value="搜索" class="btn" />
-                    <input type="button" id="btn_reset" value="清空" onclick="location.href='$!thisActionUrl';" class="btn">
+                    <input type="button" id="btn_reset" value="清空" class="btn">
                  </td>
 			</tr>
 		</table>
@@ -48,56 +41,43 @@
 	<span>
 		<a id="bt_unpublish" hidefocus="true" class="bt_no" href="javascript:void(0);">下线</a>
     </span>	
-	<div style="float:right;">
-		#set($sortOptions = [['11','按创建时间降序排列'],
-    				['12','按创建时间升序排列'],
-					['21','按更新时间降序排列'],
-    				['22','按更新时间升序排列']
-    				])
-		#sortBar({"selectName":"sortCode","sortOptions":$sortOptions
-		,"currentOption":$page.get("sortCode")
-		,"submitAction":"${thisActionUrl}#tool","lable":"选择排序方式：","queryFilter":$page})
+	<div >
+
     </div>
 </div>
-<div class="clear"></div>
 <div id="list" class="listBox">
-	##<ul class="hover">
-        <h5><span>列表</span></h5>
-    	<table>
-    		<tr>
-                <th width="20"><input type="checkbox" class="chk_all" id="chk_all1"/></th>
-    			<th width="30">序号</th>
+	<h5><span>列表</span></h5>
+	<table>
+		<tr>
+			<th width="20"><input type="checkbox" class="chk_all" id="chk_all1"/></th>
+			<th width="30">序号</th>
+			#foreach($column in $columnNotPKs)
+				<th>$!column.comment</th>
+			#end
+		</tr>
+        <template v-for="o in items">
+			<tr >
+				<td >
+					<input type="checkbox" v-model="o.id" name="idsStr" v-bind:id="'chk_' + o.id" />
+				</td>
+				<td >
+					<label v-bind:for="'chk_' + o.id">&nbsp;{{o.no}}</label>
+				</td>
 				#foreach($column in $columnNotPKs)
-    			<th>$!column.comment</th> 
+				<td >
+                    {{o.$column.fieldName}
+				</td>
 				#end
-    		</tr>			
-			 \#set($data=$page.data)
-			 \#if($data.size()>0)
-        		 \#foreach($o in $data)
-        			\#set($no = ($velocityCount + ($!page.pageNo - 1) * $!page.pageSize))
-            		<tr #if($math.mod($velocityCount,2)==0)  class="bg" #end>                
-            			<td >
-        					<input type="checkbox" value="${o.id},${o.fieldText},${o.status}" name="idsStr" id="chk_$o.id" />
-        				</td>
-        				<td > 	
-        					<label for="chk_$o.id">&nbsp;$no</label>
-        				</td>
-						#set($a='$!o')
-    					#foreach($column in $columnNotPKs)
-        				<td >
-    						$a.${column.fieldName}
-    					</td> 
-    					#end
-        				<td >
-        					<a href="e${o.id}.htm">修改</a>
-        					<a href="javascript:void(0);" class="delete">删除</a>
-        				</td>
-            		</tr>
-        		 \#end
-			 \#else
-                <tr><td colspan="10">非常抱歉，没有符合条件的数据！</td></tr>
-			 \#end 
-        </table>
-    ##</ul>
-	#pageTabFoot({"id":"pageFootBar","page":$page,"submitUrl":"${thisActionUrl}#tool","canSetPagesize":true})      
+				<td >
+					<a href="e${o.id}.htm">修改</a>
+					<a href="javascript:void(0);" class="delete">删除</a>
+				</td>
+			</tr>
+		</template>
+		<tr v-if="">
+			<td  colspan="10" >
+				非常抱歉，没有符合条件的数据！
+			</td>
+		</tr>
+	</table>
 </div>

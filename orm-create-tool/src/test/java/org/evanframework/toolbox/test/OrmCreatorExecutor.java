@@ -53,10 +53,10 @@ public class OrmCreatorExecutor {
 		param.setTemplateDir("orm-create-tool/build/template");
 
 		// 生成的表 可选 不提供该参数则生成全部表
-//		List<String> tables = new ArrayList<String>();
-//		tables.add("pub_picture");
-//		tables.add("pub_attach");
-//		param.setTables(tables);
+		List<String> tables = new ArrayList<String>();
+		tables.add("org_info");
+		tables.add("user_account");
+		param.setTables(tables);
 		OrmCreator ormCreator = new OrmCreator();
 		ormCreator.create(param);
 	}

@@ -22,10 +22,9 @@ import java.util.Map;
  */
 public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputor {
     private static final Logger logger = LoggerFactory.getLogger(AbstractOrmOutputor.class);
-
-    private VelocityEngine velocityEngine = null;
     protected OrmCreatorParam param;
     protected String ormTemplatePath;
+    private VelocityEngine velocityEngine = null;
 
     public AbstractOrmOutputor(OrmCreatorParam param) {
         this.param = param;
@@ -130,30 +129,30 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
         str = mergeTemplateToString(template, mapOutputor);
         write("query", outputor.getClassName() + "Query.java", str);
 
-		template = ormTemplatePath + "common-list.vm";
-		str = mergeTemplateToString(template, mapOutputor);
-		write("list", outputor.getClassName() + "List.java", str);
+        template = ormTemplatePath + "common-list.vm";
+        str = mergeTemplateToString(template, mapOutputor);
+        write("list", outputor.getClassName() + "List.java", str);
 
-		template = ormTemplatePath + "common-response.vm";
-		str = mergeTemplateToString(template, mapOutputor);
-		write("dto", outputor.getClassName() + "Response.java", str);
+        template = ormTemplatePath + "common-response.vm";
+        str = mergeTemplateToString(template, mapOutputor);
+        write("dto", outputor.getClassName() + "Response.java", str);
 
         template = ormTemplatePath + "common-columns.vm";
         str = mergeTemplateToString(template, mapOutputor);
         write("columns", outputor.getClassName() + "Columns.java", str);
 
-        String name = outputor.getTableName().toLowerCase();
+        String fileName = outputor.getClassName();
 
         template = ormTemplatePath + "page-form.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("page/" + name, name + "-form.vm", str);
+        write("page/", fileName + "Form.html", str);
 
         template = ormTemplatePath + "page-detail.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("page/" + name, name + "-detail.vm", str);
+        write("page/", fileName + "Detail.html", str);
 
         template = ormTemplatePath + "page-list.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("page/" + name, name + "-list.vm", str);
+        write("page/", fileName + "List.html", str);
     }
 }
