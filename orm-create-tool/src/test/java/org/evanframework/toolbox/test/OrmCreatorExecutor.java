@@ -45,7 +45,7 @@ public class OrmCreatorExecutor {
 		param.setPackageNameMapper("com.mizhi.btbs.userservice.data.mapper");// mapper包名
 		param.setPackageNamePo("com.mizhi.btbs.userservice.domain.domain.model");// Po包名
 		param.setPackageNameQuery("com.mizhi.btbs.userservice.domain.domain.query");
-		param.setPackageNameDto("com.mizhi.btbs.userservice.domain.domain.dto");// dto包名
+		param.setPackageNameDto("com.mizhi.btbs.userservice.domain.domain.response");// response包名
 		param.setPackageNameList("com.mizhi.btbs.userservice.domain.domain.list");// list包名
 		// param.setPrefixRemove("ztzq");
 		param.setOutDir("orm-create-tool/target/ormoutput");
@@ -54,8 +54,10 @@ public class OrmCreatorExecutor {
 
 		// 生成的表 可选 不提供该参数则生成全部表
 		List<String> tables = new ArrayList<String>();
-		tables.add("org_info");
-		tables.add("user_account");
+		tables.add("quota");
+		tables.add("quota_credit");
+		tables.add("quota_distribution");
+		tables.add("quota_his");
 		param.setTables(tables);
 		OrmCreator ormCreator = new OrmCreator();
 		ormCreator.create(param);

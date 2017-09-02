@@ -2,6 +2,8 @@ package org.evanframework.toolbox.ormcreator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -12,22 +14,38 @@ import java.util.List;
 import java.util.Properties;
 
 public class OrmGeneratorMain {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrmGeneratorMain.class);
 
     //属性文件的路径
     private static final String CONFIG_FILE = "orm-generator.properties";
 
-    private static Properties props;
-
     public static void main(String[] args) throws IOException {
-        props = new Properties();
+        String workDir = System.getProperty("user.dir");
 
-        String configPath = System.getProperty("user.dir") + "/" + CONFIG_FILE;
-        //URL configFile = ClassLoader.getSystemResource(CONFIG_FILE);
+        String configPath = null;
+        if (args.length > 0) {
+            configPath = args[0];
+        } else {
+            configPath = workDir + "/" + CONFIG_FILE;
+        }
+        LOGGER.info("config file: {}", configPath);
 
+        Properties props = new Properties();
         InputStream in = new BufferedInputStream(new FileInputStream(configPath));
         props.load(in);
 
         OrmCreatorParam param = new OrmCreatorParam();
+
+        if (args.length > 1) {
+            param.setTemplateDir(args[1]);
+        } else {
+            param.setTemplateDir(workDir + "/" + props.getProperty("template.dir"));
+        }
+        if (args.length > 2) {
+            param.setOutDir(args[2]);
+        } else {
+            param.setOutDir(workDir + "/" + props.getProperty("target.dir"));
+        }
 
         param.setDatabaseType(OrmCreatorParam.DatabaseType.valueOf(props.getProperty("db.type")));
         param.setOrmType(OrmCreatorParam.OrmType.valueOf(props.getProperty("orm.type")));
@@ -37,15 +55,13 @@ public class OrmGeneratorMain {
         param.setJdbcPassword(props.getProperty("jdbc.password"));
         param.setDatabaseSchema(props.getProperty("jdbc.schema"));
 
-        param.setOutDir(props.getProperty("target.dir"));
-        param.setTemplateDir(props.getProperty("template.dir"));
-
         param.setPackageNamePo(props.getProperty("package.name.entity"));// 数据表实体类包名
         param.setPackageNameQuery(props.getProperty("package.name.query"));
         param.setPackageNameDao(props.getProperty("package.name.dao"));// DAO包名
         param.setPackageNameMapper(props.getProperty("package.name.mapper"));// Mybatis Mapper包名
-        param.setPackageNameDto(props.getProperty("package.name.dto"));// dto包名
+        param.setPackageNameResponse(props.getProperty("package.name.response"));// dto包名
         param.setPackageNameList(props.getProperty("package.name.list"));// list包名
+        param.setPackageNameManager(props.getProperty("package.name.manager"));
 
         String tmp = props.getProperty("column.name.createtime");
         if (StringUtils.isNotBlank(tmp)) {
@@ -64,9 +80,9 @@ public class OrmGeneratorMain {
             param.setTables(tableList);
         }
 
+        LOGGER.info("{}", param);
+
         OrmCreator ormCreator = new OrmCreator();
         ormCreator.create(param);
     }
-
-
 }

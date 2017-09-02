@@ -1,0 +1,51 @@
+package ${outputor.param.packageNameManager};
+
+import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.evanframework.dto.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+*$!{outputor.comment} 业务管理
+*/
+@Service
+public class ${outputor.className}Manager  {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrgManager.class);
+
+    @Autowired
+    private ${outputor.className}Mapper ${outputor.objectName}Mapper;
+
+    /**
+    * 分页查询
+    */
+    public PageResult queryPage(${outputor.className}Query query) {
+        long count = ${outputor.objectName}Mapper.queryCount(query);
+        List<${outputor.className}> data = null;
+        if (count > 0) {
+            data = ${outputor.objectName}Mapper.queryList(query);
+        } else {
+            data = new ArrayList<>();
+        }
+        PageResult<${outputor.className}> pageResult = PageResult.create(query, data, count);
+        return pageResult;
+    }
+
+    /**
+    * 添加
+    */
+    @Transactional
+    public void add(${outputor.className} ${outputor.objectName}) {
+        ${outputor.objectName}Mapper.insert(${outputor.objectName});
+    }
+
+    /**
+    * 更新
+    */
+    public void update(${outputor.className} ${outputor.objectName}) {
+        ${outputor.objectName}Mapper.insert(${outputor.objectName});
+    }
+}

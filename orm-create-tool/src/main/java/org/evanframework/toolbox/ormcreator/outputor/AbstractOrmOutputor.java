@@ -21,7 +21,7 @@ import java.util.Map;
  * @version Date: 2010-9-11 下午02:49:07
  */
 public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputor {
-    private static final Logger logger = LoggerFactory.getLogger(AbstractOrmOutputor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractOrmOutputor.class);
     protected OrmCreatorParam param;
     protected String ormTemplatePath;
     private VelocityEngine velocityEngine = null;
@@ -30,10 +30,7 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
         this.param = param;
 
         //URL url = ClassLoader.getSystemResource(param.getTemplateDir());
-        String templateDir = System.getProperty("user.dir") + "/" + param.getTemplateDir();
-        if (logger.isInfoEnabled()) {
-            logger.info("templateDir:" + templateDir);
-        }
+        String templateDir = param.getTemplateDir();
 
         velocityEngine = new VelocityEngine();
 
@@ -75,6 +72,8 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
             //osw = new OutputStreamWriter(fos, param.getEncoding());
             out = new PrintWriter(outFile, param.getEncoding());
             out.write(content);
+
+            LOGGER.info("output:{}", outFile);
         } catch (IOException e) {
             throw new UnsupportedOperationException(e);
         } finally {
@@ -123,23 +122,27 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
         String template;
         template = ormTemplatePath + "common-model.vm";
         String str = mergeTemplateToString(template, mapOutputor);
-        write("model", outputor.getClassName() + ".java", str);
+        write("client/model", outputor.getClassName() + ".java", str);
 
         template = ormTemplatePath + "common-query.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("query", outputor.getClassName() + "Query.java", str);
+        write("client/query", outputor.getClassName() + "Query.java", str);
 
         template = ormTemplatePath + "common-list.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("list", outputor.getClassName() + "List.java", str);
+        write("client/list", outputor.getClassName() + "List.java", str);
 
         template = ormTemplatePath + "common-response.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("dto", outputor.getClassName() + "Response.java", str);
+        write("client/response", outputor.getClassName() + "Response.java", str);
 
         template = ormTemplatePath + "common-columns.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("columns", outputor.getClassName() + "Columns.java", str);
+        write("service/columns", outputor.getClassName() + "Columns.java", str);
+
+        template = ormTemplatePath + "common-manager.vm";
+        str = mergeTemplateToString(template, mapOutputor);
+        write("service/manager", outputor.getClassName() + "Manager.java", str);
 
         String fileName = outputor.getClassName();
 

@@ -1,4 +1,4 @@
-package ${outputor.param.packageNameDto};
+package ${outputor.param.packageNameResponse};
 
 import org.evanframework.dto.ApiResponse;
 import java.io.Serializable;

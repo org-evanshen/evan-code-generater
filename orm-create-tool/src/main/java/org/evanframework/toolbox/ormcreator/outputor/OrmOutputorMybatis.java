@@ -21,19 +21,19 @@ public class OrmOutputorMybatis extends AbstractOrmOutputor implements OrmOutput
 
 		template = ormTemplatePath + "mybatis-mapper-xml.vm";
 		str = mergeTemplateToString(template, mapOutputor);
-		write("mybatismapperxml", outputor.getClassName() + "Mapper.xml", str);
+		write("service/mybatismapperxml", outputor.getClassName() + "Mapper.xml", str);
 
 		template = ormTemplatePath + "mybatis-mapper-class.vm";
 		str = mergeTemplateToString(template, mapOutputor);
-		write("mybatismapperclass", outputor.getClassName() + "Mapper.java", str);
+		write("service/mybatismapperclass", outputor.getClassName() + "Mapper.java", str);
 
 		template = ormTemplatePath + "mybatis-dao.vm";
 		str = mergeTemplateToString(template, mapOutputor);
-		write("dao", outputor.getClassName() + "Dao.java", str);
+		write("service/dao", outputor.getClassName() + "Dao.java", str);
 		
 		template = ormTemplatePath + "mybatis-mapper-test.vm";
 		str = mergeTemplateToString(template, mapOutputor);
-		write("test", outputor.getClassName() + "MapperTest.java", str);
+		write("service/test", outputor.getClassName() + "MapperTest.java", str);
 
 	}
 
