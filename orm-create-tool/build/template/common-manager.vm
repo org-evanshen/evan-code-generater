@@ -48,4 +48,21 @@ public class ${outputor.className}Manager  {
     public void update(${outputor.className} ${outputor.objectName}) {
         ${outputor.objectName}Mapper.insert(${outputor.objectName});
     }
+
+    /**
+    * 根据多个id获取多个
+    */
+    public Map<${outputor.pkJavaDataType}, ${outputor.className}> getMap(Collection<${outputor.pkJavaDataType}> ids) {
+        ${outputor.className}Query query = new ${outputor.className}Query();
+        query.setIdArray(ids.toArray(new ${outputor.pkJavaDataType}[]{}));
+
+        List<${outputor.className}> list = ${outputor.objectName}Mapper.queryList(query);
+        Map<Integer, ${outputor.className}> map = new HashMap<>(list.size());
+
+        for (${outputor.className} e : list) {
+            map.put(e.getId(), e);
+        }
+
+        return map;
+    }
 }

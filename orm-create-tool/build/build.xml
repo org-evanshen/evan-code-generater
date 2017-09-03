@@ -6,12 +6,12 @@
 	<property name="target.file" value="orm-generator.zip" />	
 	
 	<target name="build" description="Orm Generating Build" >
-		<copy todir="${target.dir}/lib" preservelastmodified="true">			
+		<copy todir="${target.dir}/lib" >
 			<fileset dir="${target.dir}">
 				<include name="orm-create-tool*.jar" />
 			</fileset>
 		</copy>
-		<copy todir="${target.dir}" preservelastmodified="true">
+		<copy todir="${target.dir}">
 			<fileset dir=".">
 				<include name="orm-generator.*" />
 				<include name="template/*.vm" />
