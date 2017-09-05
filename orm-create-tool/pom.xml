@@ -107,11 +107,11 @@
 		</plugins>	
 	</build>
 
+	<!--
 	<repositories>
 		<repository>
 			<id>nexus-releases</id>
 			<name>nexus Repository</name>
-			<!--<url>http://192.168.0.109:8081/nexus/content/groups/public/</url>-->
 			<url>http://192.168.0.109:8081/repository/maven-public/</url>
 			<releases>
 				<enabled>true</enabled>
@@ -121,18 +121,5 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	<distributionManagement>
-		<repository>
-			<id>nexus-releases</id>
-			<name>Internal Releases</name>
-			<!--<url>http://192.168.0.109:8081/nexus/content/repositories/releases</url>-->
-			<url>http://192.168.0.109:8081/repository/maven-releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<name>Internal Snapshots</name>
-			<!--<url>http://192.168.0.109:8081/nexus/content/repositories/snapshots</url>-->
-			<url>http://192.168.0.109:8081/repository/maven-snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+	-->
 </project>

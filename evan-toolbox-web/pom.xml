@@ -185,8 +185,8 @@
 		</plugins>	
 	</build>
 
+	<!--
 	<repositories>
-		<!--nexus Repository -->
 		<repository>
 			<id>nexus-releases</id>
 			<name>nexus Repository</name>
@@ -199,17 +199,5 @@
 			</snapshots>
 		</repository>
 	</repositories>
-
-	<distributionManagement>
-		<repository>
-			<id>nexus-releases</id>
-			<name>Internal Releases</name>			
-			<url>http://47.92.154.139:8081/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<name>Internal Snapshots</name>			
-			<url>http://47.92.154.139:8081/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement> 
+	-->
 </project>
