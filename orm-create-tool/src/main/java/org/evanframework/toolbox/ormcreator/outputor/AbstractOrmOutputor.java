@@ -157,5 +157,18 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
         template = ormTemplatePath + "page-list.vm";
         str = mergeTemplateToString(template, mapOutputor);
         write("page/", fileName + "List.html", str);
+
+        //vue
+        template = ormTemplatePath + "page-vue-html.vm";
+        str = mergeTemplateToString(template, mapOutputor);
+        write("vue/html/", fileName + ".html", str);
+
+        template = ormTemplatePath + "page-vue-js.vm";
+        str = mergeTemplateToString(template, mapOutputor);
+        write("vue/html/", fileName + ".vue", str);
+
+        template = ormTemplatePath + "page-vue-service.vm";
+        str = mergeTemplateToString(template, mapOutputor);
+        write("vue/service/", fileName + "Service.vue", str);
     }
 }

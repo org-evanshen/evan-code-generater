@@ -26,7 +26,7 @@ public class OrmCreatorExecutor {
 
 		param.setDatabaseType(DatabaseType.mysql);
 
-		param.setJdbcUrl("jdbc:mysql://192.168.0.109:3306/information_schema?useSSL=false");
+		param.setJdbcUrl("jdbc:mysql://101.37.151.117:3306/information_schema?useSSL=false");
 		param.setJdbcUser("root");
 		param.setJdbcPassword("MiZhi001");
 
@@ -56,8 +56,8 @@ public class OrmCreatorExecutor {
 		List<String> tables = new ArrayList<String>();
 		tables.add("quota");
 		tables.add("quota_credit");
-		tables.add("quota_distribution");
-		tables.add("quota_his");
+//		tables.add("quota_distribution");
+//		tables.add("quota_his");
 		param.setTables(tables);
 		OrmCreator ormCreator = new OrmCreator();
 		ormCreator.create(param);

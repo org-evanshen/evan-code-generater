@@ -1,5 +1,7 @@
 package ${outputor.param.packageNameQuery};
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,13 +20,23 @@ public class ${outputor.className}Query extends ${outputor.param.baseQueryClass}
 		#set($comment=${column.comment})
 		#if($column.isPk=="1" || $column.fieldName=="status")
 			#if($column.fieldName=="status")
+
+            	@ApiModelProperty(value = "$comment")
 				private ${dataType} ${fieldName};//$!comment
 			#end
+
+        	@ApiModelProperty(value = "$comment 数组")
 			private ${dataType}[] ${fieldName}Array;//$!comment
-		#elseif("$column.dataType"=="BigDecimal" || "$column.dataType"=="Date") 
+		#elseif("$column.dataType"=="BigDecimal" || "$column.dataType"=="Date")
+
+        	@ApiModelProperty(value = "$comment 开始")
 			private ${dataType} ${fieldName}From;//$!comment
+        	@ApiModelProperty(value = "$comment 结束")
+
 			private ${dataType} ${fieldName}To;//$!comment
-        #else	
+        #else
+
+        	@ApiModelProperty(value = "$comment")
     		private ${dataType} ${fieldName};//$!comment
 		#end
 		#set($comment='')				
