@@ -1,4 +1,4 @@
-package com.ancun.products.core.tool;
+package org.evanframework.tool;
 
 import org.jasypt.util.text.BasicTextEncryptor;
 
@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * create at 2016/1/13 下午1:53
  *
- * @author <a href="mailto:taofei@ancun.com">Paul Yao</a>
+ * @author <a href="mailto:taofei@qq.com">Paul Yao</a>
  * @version %I%, %G%
  *
  */

@@ -30,7 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
  * <p>
  * create at 2014年7月21日 上午10:00:18
  * 
- * @author <a href="mailto:shenwei@ancun.com">ShenWei</a>
+ * @author <a href="mailto:shenwei@qq.com">ShenWei</a>
  * @version %I%, %G%
  * @see
  */

@@ -1,4 +1,4 @@
-package com.ancun.pdftools.utils;
+package org.evanframework.toolbox.pdf.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ import java.util.UUID;
 /**
  * 文件工具
  * 
- * @author <a href="mailto:shenwei@ancun.com">ShenWei</a>
+ * @author <a href="mailto:shenwei@qq.com">ShenWei</a>
  * @version Date: 2010-10-16 上午11:24:50
  * @since
  */
@@ -34,7 +34,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 删除文件
 	 * <p>
-	 * author: <a href="mailto:shenwei@ancun.com">ShenWei</a><br>
+	 * author: <a href="mailto:shenwei@qq.com">ShenWei</a><br>
 	 * version: 2011-3-13 下午03:19:23 <br>
 	 * 
 	 * @param filePath
@@ -65,7 +65,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 删除文件夹
 	 * <p>
-	 * author: <a href="mailto:shenwei@ancun.com">ShenWei</a><br>
+	 * author: <a href="mailto:shenwei@qq.com">ShenWei</a><br>
 	 * version: 2011-3-13 下午03:20:04 <br>
 	 * 
 	 * @param dir
@@ -118,7 +118,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 
 	 * <p>
-	 * author: <a href="mailto:shenwei@ancun.com">ShenWei</a><br>
+	 * author: <a href="mailto:shenwei@qq.com">ShenWei</a><br>
 	 * version: 2011-3-13 下午03:33:33 <br>
 	 * 
 	 * @param oldFile
@@ -162,7 +162,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 
 	 * <p>
-	 * author: <a href="mailto:shenwei@ancun.com">ShenWei</a><br>
+	 * author: <a href="mailto:shenwei@qq.com">ShenWei</a><br>
 	 * version: 2011-3-6 下午09:51:18 <br>
 	 * 
 	 * @param outFilePath
@@ -178,7 +178,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 文件名加后缀
 	 * <p>
-	 * author: <a href="mailto:shenwei@ancun.com">ShenWei</a><br>
+	 * author: <a href="mailto:shenwei@qq.com">ShenWei</a><br>
 	 * version: 2011-3-8 下午05:41:57 <br>
 	 * 
 	 * @param fileName
@@ -272,7 +272,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * 生成uuid
 	 * 
 	 *  <p>
-	 *         author: <a href="mailto:caozhenfei@ancun.com">Dim.Cao</a><br>
+	 *         author: <a href="mailto:caozhenfei@qq.com">Dim.Cao</a><br>
 	 *         create at: 2014年4月16日上午12:34:54
 	 */
 	public static String getUUID() {

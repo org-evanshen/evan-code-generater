@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Class-Path: /jasypt-1.9.2
-Main-Class: com.ancun.products.core.tool.EncryptPropertiesTool
+Main-Class: org.evanframework.tool.EncryptPropertiesTool
 

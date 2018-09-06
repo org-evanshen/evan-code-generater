@@ -1,4 +1,4 @@
-package com.ancun.pdftools.utils;
+package org.evanframework.toolbox.pdf.utils;
 
 
 import com.artofsolving.jodconverter.DocumentConverter;
@@ -6,7 +6,6 @@ import com.artofsolving.jodconverter.openoffice.connection.OpenOfficeConnection;
 import com.artofsolving.jodconverter.openoffice.connection.SocketOpenOfficeConnection;
 import com.artofsolving.jodconverter.openoffice.converter.StreamOpenOfficeDocumentConverter;
 import com.itextpdf.text.DocumentException;
-import org.artofsolving.jodconverter.OfficeDocumentConverter;
 import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
 import org.artofsolving.jodconverter.office.OfficeManager;
 import org.slf4j.Logger;

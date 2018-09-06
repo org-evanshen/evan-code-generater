@@ -2,7 +2,7 @@
 <project name="pdf-tool-build" default="build" basedir=".">
 
 	
-	<property name="author" value="shenwei@ancun.com" />
+	<property name="author" value="shenwei@qq.com" />
 	<property name="work.dir" value="../target" />
 	<property name="target.file" value="${work.dir}/pdf-tool.zip" />
 	

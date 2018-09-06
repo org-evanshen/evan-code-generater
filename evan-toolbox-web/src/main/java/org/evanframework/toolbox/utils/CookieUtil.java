@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * cookie工具
  * 
- * @author <a href="mailto:shenwei@ancun.com">ShenWei</a>
+ * @author <a href="mailto:shenwei@qq.com">ShenWei</a>
  * @version Date: 2010-10-14 下午01:01:39
  * @since
  */
@@ -27,7 +27,7 @@ public class CookieUtil {
 	/**
 	 * 读取Cookie,返回加入该Cookie的value
 	 * <p>
-	 * author: <a href="mailto:shenwei@ancun.com">ShenWei</a><br>
+	 * author: <a href="mailto:shenwei@qq.com">ShenWei</a><br>
 	 * version: 2010-12-10 上午10:24:56 <br>
 	 * 
 	 * @param cookieName
@@ -55,7 +55,7 @@ public class CookieUtil {
 	/**
 	 * 读取Cookie,将该Cookie的value转换层对象在返回
 	 * <p>
-	 * author: <a href="mailto:shenwei@ancun.com">ShenWei</a><br>
+	 * author: <a href="mailto:shenwei@qq.com">ShenWei</a><br>
 	 * version: 2010-12-10 上午10:24:45 <br>
 	 * 
 	 * @param c
@@ -81,7 +81,7 @@ public class CookieUtil {
 	/**
 	 * 
 	 * <p>
-	 * author: <a href="mailto:shenwei@ancun.com">ShenWei</a><br>
+	 * author: <a href="mailto:shenwei@qq.com">ShenWei</a><br>
 	 * version: 2010-12-10 上午10:26:35 <br>
 	 * 
 	 * @param cookieName
@@ -98,7 +98,7 @@ public class CookieUtil {
 	/**
 	 * 将对象保存到cookie
 	 * <p>
-	 * author: <a href="mailto:shenwei@ancun.com">ShenWei</a><br>
+	 * author: <a href="mailto:shenwei@qq.com">ShenWei</a><br>
 	 * version: 2010-12-10 上午10:22:31 <br>
 	 * 
 	 * @param cookieName

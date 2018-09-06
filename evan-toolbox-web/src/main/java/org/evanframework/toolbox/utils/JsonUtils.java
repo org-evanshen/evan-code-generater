@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Json 工具
  * 
- * @author <a href="mailto:shenwei@ancun.com">ShenWei</a>
+ * @author <a href="mailto:shenwei@qq.com">ShenWei</a>
  * @version Date: 2010-5-7 下午02:12:21
  * @since
  */
