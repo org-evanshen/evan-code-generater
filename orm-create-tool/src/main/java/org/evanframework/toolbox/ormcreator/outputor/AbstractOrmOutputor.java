@@ -3,8 +3,9 @@ package org.evanframework.toolbox.ormcreator.outputor;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam;
-import org.evanframework.toolbox.ormcreator.domain.OrmTemplete;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam;
+import org.evanframework.toolbox.ormcreator.model.OutputModel;
+import org.evanframework.toolbox.ormcreator.utils.OrmCreatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,64 +46,50 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
         velocityEngine.init();
     }
 
-    public abstract void outPut(OrmTemplete outputor, Map<String, Object> mapOutputor);
+    public abstract void outPut(OutputModel outputor, Map<String, Object> mapOutputor);
 
     protected void write(String path, String file, String content) {
-        String fullPath = param.getOutDir() + File.separatorChar + path;
-
-        File dirPath = new File(fullPath);
-
-        if (!dirPath.exists()) {
-            dirPath.mkdirs();
-        }
-
-        File outFile = new File(fullPath + File.separatorChar + file);
-        if (outFile.exists()) {
-            outFile.delete();
-        }
-
+        File outFile = getTargetFile(path, file);
         PrintWriter out = null;
-        //FileOutputStream fos = null;
-        //OutputStreamWriter osw = null;
-        //BufferedReader input = null;
-
         try {
             outFile.createNewFile();
             //fos = new FileOutputStream(outFile);
             //osw = new OutputStreamWriter(fos, param.getEncoding());
             out = new PrintWriter(outFile, param.getEncoding());
             out.write(content);
-
             LOGGER.info("output:{}", outFile);
         } catch (IOException e) {
             throw new UnsupportedOperationException(e);
         } finally {
             if (out != null) {
                 out.close();
-                //				try {
-                //					fos.close();
-                //				} catch (IOException e) {
-                //					logger.error(e.getMessage(), e);
-                //				}
-                //				try {
-                //					osw.close();
-                //				} catch (IOException e) {
-                //					logger.error(e.getMessage(), e);
-                //				}
-                //				try {
-                //					input.close();
-                //				} catch (IOException e) {
-                //					logger.error(e.getMessage(), e);
-                //				}
             }
         }
     }
+
 
     protected String mergeTemplateToString(String templateLocation, Map<String, Object> model) {
         StringWriter writer = new StringWriter();
         VelocityContext velocityContext = new VelocityContext(model);
         velocityEngine.mergeTemplate(templateLocation, param.getEncoding(), velocityContext, writer);
         return writer.toString();
+    }
+
+    protected void mergeTemplate(Map<String, Object> model, String templateLocation, String targetDir, String targetFile) {
+//        String writer = null;
+//        File targetPath = getTargetFile(targetDir, targetFile);
+//
+//        try {
+//            writer = new FileWriter(targetPath);
+//        } catch (IOException ex) {
+//            LOGGER.error(ex.getMessage(), ex);
+//        }
+//
+//        VelocityContext velocityContext = new VelocityContext(model);
+//        velocityEngine.mergeTemplate(templateLocation, param.getEncoding(), velocityContext, writer);
+        String content = mergeTemplateToString(templateLocation, model);
+        write(targetDir, targetFile, content);
+//        LOGGER.info("output: {}",targetPath);
     }
 
     protected VelocityEngine getVelocityEngine() {
@@ -117,58 +104,89 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
      * @param outputor
      * @param mapOutputor
      */
-    protected void outputCommon(OrmTemplete outputor, Map<String, Object> mapOutputor) {
+    protected void outputCommon(OutputModel outputor, Map<String, Object> mapOutputor) {
+        String subPath = OrmCreatorUtil.convertTableNameToSubPackageName(outputor.getTableName());
 
         String template;
-        template = ormTemplatePath + "common-model.vm";
+
+        template = ormTemplatePath + "common/common-po.vm";
+        mergeTemplate(mapOutputor, template, "client/" + subPath, outputor.getClassName() + ".java");
+
+        template = ormTemplatePath + "common/common-query.vm";
         String str = mergeTemplateToString(template, mapOutputor);
-        write("client/model", outputor.getClassName() + ".java", str);
+        write("client/" + subPath, outputor.getClassName() + "QueryDTO.java", str);
 
-        template = ormTemplatePath + "common-query.vm";
+        template = ormTemplatePath + "common/common-addUpdate.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("client/query", outputor.getClassName() + "Query.java", str);
+        write("client/" + subPath, outputor.getClassName() + "AddUpdateDTO.java", str);
 
-        template = ormTemplatePath + "common-list.vm";
+        template = ormTemplatePath + "common/common-vo.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("client/list", outputor.getClassName() + "List.java", str);
+        write("client/" + subPath, outputor.getClassName() + "VO.java", str);
 
-        template = ormTemplatePath + "common-response.vm";
-        str = mergeTemplateToString(template, mapOutputor);
-        write("client/response", outputor.getClassName() + "Response.java", str);
+        template = ormTemplatePath + "common/common-list.vm";
+        mergeTemplate(mapOutputor, template, "client/" + subPath, outputor.getClassName() + "VOList.java");
 
-        template = ormTemplatePath + "common-columns.vm";
-        str = mergeTemplateToString(template, mapOutputor);
-        write("service/columns", outputor.getClassName() + "Columns.java", str);
+//        template = ormTemplatePath + "common-response.vm";
+//        str = mergeTemplateToString(template, mapOutputor);
+//        write("client/response", outputor.getClassName() + "Response.java", str);
 
-        template = ormTemplatePath + "common-manager.vm";
-        str = mergeTemplateToString(template, mapOutputor);
-        write("service/manager", outputor.getClassName() + "Manager.java", str);
+//        template = ormTemplatePath + "common/common-do.vm";
+//        str = mergeTemplateToString(template, mapOutputor);
+//        write("domain/" + subPath, outputor.getClassName() + "Domain.java", str);
+//
+//        template = ormTemplatePath + "common/common-do-factory.vm";
+//        str = mergeTemplateToString(template, mapOutputor);
+//        write("domain/" + subPath, outputor.getClassName() + "Factory.java", str);
+
+//        template = ormTemplatePath + "common-columns.vm";
+//        str = mergeTemplateToString(template, mapOutputor);
+//        write("service/columns", outputor.getClassName() + "Columns.java", str);
+
+//        template = ormTemplatePath + "common-manager.vm";
+//        str = mergeTemplateToString(template, mapOutputor);
+//        write("service/manager", outputor.getClassName() + "Manager.java", str);
 
         String fileName = outputor.getClassName();
 
-        template = ormTemplatePath + "page-form.vm";
+        template = ormTemplatePath + "ui/page-form.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("page/", fileName + "Form.html", str);
+        write("ui/", fileName + "Form.html", str);
 
-        template = ormTemplatePath + "page-detail.vm";
+        template = ormTemplatePath + "ui/page-detail.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("page/", fileName + "Detail.html", str);
+        write("ui/", fileName + "Detail.html", str);
 
-        template = ormTemplatePath + "page-list.vm";
+        template = ormTemplatePath + "ui/page-list.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("page/", fileName + "List.html", str);
+        write("ui/", fileName + "List.html", str);
 
         //vue
-        template = ormTemplatePath + "page-vue-html.vm";
+        template = ormTemplatePath + "ui/page-vue-html.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("vue/html/", fileName + ".html", str);
+        write("ui/vue/html/", fileName + ".html", str);
 
-        template = ormTemplatePath + "page-vue-js.vm";
+        template = ormTemplatePath + "ui/page-vue-js.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("vue/html/", fileName + ".vue", str);
+        write("ui/vue/html/", fileName + ".vue", str);
 
-        template = ormTemplatePath + "page-vue-service.vm";
+        template = ormTemplatePath + "ui/page-vue-service.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("vue/service/", fileName + "Service.vue", str);
+        write("ui/vue/service/", fileName + "Service.vue", str);
+    }
+
+    private File getTargetFile(String path, String file) {
+        String fullPath = param.getOutDir() + File.separatorChar + path;
+
+        File dirPath = new File(fullPath);
+        if (!dirPath.exists()) {
+            dirPath.mkdirs();
+        }
+
+        File outFile = new File(fullPath + File.separatorChar + file);
+        if (outFile.exists()) {
+            outFile.delete();
+        }
+        return outFile;
     }
 }

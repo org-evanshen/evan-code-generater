@@ -1,7 +1,7 @@
 package org.evanframework.toolbox.ormcreator.database;
 
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam;
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam.DatabaseType;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam.DatabaseType;
 
 public class DatabaseFactory {
 	/**

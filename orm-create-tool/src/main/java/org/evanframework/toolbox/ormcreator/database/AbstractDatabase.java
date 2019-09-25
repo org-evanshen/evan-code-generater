@@ -1,7 +1,7 @@
 package org.evanframework.toolbox.ormcreator.database;
 
 import org.evanframework.toolbox.ormcreator.OrmCreator;
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +54,20 @@ public abstract class AbstractDatabase implements Database {
 
 	public ResultSet getTables(List<String> tables) {
 		try {
-			ps = getCn().prepareStatement(getTablesSql(tables));
+			String sql1 = getTablesSql();
+
+			StringBuffer sql2= new StringBuffer(sql1);
+
+			if (tables != null && tables.size() > 0) {
+				StringBuilder sqlTableNames = new StringBuilder();
+				for (String table : tables) {
+					sqlTableNames.append(",'" + table.toUpperCase() + "'");
+				}
+				sqlTableNames.delete(0, 1);
+				sql2.append(" and a.table_name in (" + sqlTableNames.toString() + ")");
+			}
+
+			ps = getCn().prepareStatement(sql2.toString());
 			return ps.executeQuery();
 		} catch (SQLException e) {
 			if (logger.isErrorEnabled()) {
@@ -94,11 +107,10 @@ public abstract class AbstractDatabase implements Database {
 	 * <p>
 	 * author: <a href="mailto:shenw@hundsun.com">Evan.Shen</a><br>
 	 * version: 2012-1-14 下午6:03:38 <br>
-	 * 
-	 * @param tables
+	 *
 	 * @return
 	 */
-	protected abstract String getTablesSql(List<String> tables);
+	protected abstract String getTablesSql();
 
 	/**
 	 * 

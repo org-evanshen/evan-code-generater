@@ -2,9 +2,9 @@ package org.evanframework.toolbox.ormcreator.database;
 
 import org.apache.commons.lang3.StringUtils;
 import org.evanframework.toolbox.ormcreator.datatypeconvertor.DataTypeConvertor;
-import org.evanframework.toolbox.ormcreator.domain.Column;
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam;
-import org.evanframework.toolbox.ormcreator.domain.Table;
+import org.evanframework.toolbox.ormcreator.model.Column;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam;
+import org.evanframework.toolbox.ormcreator.model.Table;
 import org.evanframework.toolbox.ormcreator.utils.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class Oracle extends AbstractDatabase implements Database {
 	private static final Logger logger = LoggerFactory.getLogger(Oracle.class);
@@ -27,22 +26,8 @@ public class Oracle extends AbstractDatabase implements Database {
 	}
 
 	@Override
-	protected String getTablesSql(List<String> tables) {
-		StringBuilder sql = new StringBuilder(
-				"select a.table_name,b.comments,b.table_type from user_tables a,user_tab_comments b where a.table_name=b.table_name ");
-
-		if (tables != null && tables.size() > 0) {
-			StringBuilder sqlTableNames = new StringBuilder();
-
-			for (String table : tables) {
-				sqlTableNames.append(",'" + table.toUpperCase() + "'");
-			}
-			sqlTableNames.delete(0, 1);
-
-			sql.append(" and a.table_name in (" + sqlTableNames.toString() + ")");
-		}
-
-		return sql.toString();
+	protected String getTablesSql() {
+		return "select a.table_name,b.comments,b.table_type from user_tables a,user_tab_comments b where a.table_name=b.table_name ";
 	}
 
 	@Override

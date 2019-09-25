@@ -2,15 +2,14 @@ package org.evanframework.toolbox.ormcreator.database;
 
 import org.apache.commons.lang3.StringUtils;
 import org.evanframework.toolbox.ormcreator.datatypeconvertor.DataTypeConvertor;
-import org.evanframework.toolbox.ormcreator.domain.Column;
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam;
-import org.evanframework.toolbox.ormcreator.domain.Table;
+import org.evanframework.toolbox.ormcreator.model.Column;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam;
+import org.evanframework.toolbox.ormcreator.model.Table;
 import org.evanframework.toolbox.ormcreator.utils.JdbcUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class Mysql extends AbstractDatabase implements Database {
 
@@ -25,26 +24,12 @@ public class Mysql extends AbstractDatabase implements Database {
 
 	@Override
 	protected String getJdbcDriver() {
-		return "com.mysql.jdbc.Driver";
+		return "com.mysql.cj.jdbc.Driver";
 	}
 
 	@Override
-	protected String getTablesSql(List<String> tables) {
-		StringBuilder sql = new StringBuilder(
-				"select a.TABLE_NAME,a.TABLE_COMMENT from TABLES a where a.TABLE_SCHEMA='" + schemaName + "'");
-
-		if (tables != null && tables.size() > 0) {
-			StringBuilder sqlTableNames = new StringBuilder();
-
-			for (String table : tables) {
-				sqlTableNames.append(",'" + table.toUpperCase() + "'");
-			}
-			sqlTableNames.delete(0, 1);
-
-			sql.append(" and a.table_name in (" + sqlTableNames.toString() + ")");
-		}
-
-		return sql.toString();
+	protected String getTablesSql() {
+		return "select a.TABLE_NAME,a.TABLE_COMMENT from TABLES a where a.TABLE_SCHEMA='" + schemaName + "' ";
 	}
 
 	@Override

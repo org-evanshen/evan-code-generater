@@ -1,9 +1,9 @@
 package org.evanframework.toolbox.test;
 
 import org.evanframework.toolbox.ormcreator.OrmCreator;
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam;
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam.DatabaseType;
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam.OrmType;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam.DatabaseType;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam.OrmType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class OrmCreatorExecutor {
 
 		param.setDatabaseType(DatabaseType.mysql);
 
-		param.setJdbcUrl("jdbc:mysql://101.37.151.117:3306/information_schema?useSSL=false");
+		param.setJdbcUrl("jdbc:mysql://116.62.114.198:3306/information_schema?useSSL=false");
 		param.setJdbcUser("root");
 		param.setJdbcPassword("MiZhi001");
 
@@ -34,31 +34,35 @@ public class OrmCreatorExecutor {
 //		param.setJdbcUser("root");
 //		param.setJdbcPassword("Shen0001");
 
-		param.setDatabaseSchema("btbs_user");
+		param.setDatabaseSchema("btbs_base");
 
 		// param.setDatabaseType(DatabaseType.oracle);
 		// param.setJdbcUrl("jdbc:oracle:thin:@localhost:1521:orcl");
 		// param.setJdbcUser("evan_base");
 		// param.setJdbcPassword("evan_base");
 
-		param.setPackageNameDao("com.mizhi.btbs.userservice.data.dao");// DAO包名
-		param.setPackageNameMapper("com.mizhi.btbs.userservice.data.mapper");// mapper包名
-		param.setPackageNamePo("com.mizhi.btbs.userservice.domain.domain.model");// Po包名
-		param.setPackageNameQuery("com.mizhi.btbs.userservice.domain.domain.query");
-		param.setPackageNameDto("com.mizhi.btbs.userservice.domain.domain.response");// response包名
-		param.setPackageNameList("com.mizhi.btbs.userservice.domain.domain.list");// list包名
+		param.setPackageNameRoot("org.evan.springcloud.base");
+
+//		param.setPackageNameDao("com.mizhi.btbs.userservice.data.dao");// DAO包名
+//		param.setPackageNameMapper("com.mizhi.btbs.userservice.data.mapper");// mapper包名
+//		param.setPackageNamePo("com.mizhi.btbs.userservice.domain.domain.model");// Po包名
+//		param.setPackageNameQuery("com.mizhi.btbs.userservice.domain.domain.query");
+//		param.setPackageNameDto("com.mizhi.btbs.userservice.domain.domain.response");// response包名
+//		param.setPackageNameList("com.mizhi.btbs.userservice.domain.domain.list");// list包名
+
 		// param.setPrefixRemove("ztzq");
-		param.setOutDir("orm-create-tool/target/ormoutput");
+		param.setOutDir("orm-create-tool/ormoutput");
 
 		param.setTemplateDir("orm-create-tool/build/template");
 
 		// 生成的表 可选 不提供该参数则生成全部表
 		List<String> tables = new ArrayList<String>();
-		tables.add("quota");
-		tables.add("quota_credit");
-//		tables.add("quota_distribution");
-//		tables.add("quota_his");
+		tables.add("demo");
+		tables.add("demo_child1");
+		tables.add("pub_attach");
+		tables.add("pub_picture");
 		param.setTables(tables);
+
 		OrmCreator ormCreator = new OrmCreator();
 		ormCreator.create(param);
 	}

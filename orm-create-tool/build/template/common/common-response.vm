@@ -1,0 +1,11 @@
+package ${outputor.packageName};
+
+import org.evanframework.dto.ApiResponse;
+import java.io.Serializable;
+
+/**
+*$!{outputor.comment} Response
+*/
+public class ${outputor.className}Response extends ApiResponse<${outputor.className}>  implements Serializable{
+    private static final long serialVersionUID = ${outputor.serialVersionUid}9L;
+}

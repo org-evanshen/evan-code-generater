@@ -1,7 +1,7 @@
 package org.evanframework.toolbox.ormcreator;
 
 import org.apache.commons.lang3.StringUtils;
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,9 @@ public class OrmGeneratorMain {
         } else {
             configPath = workDir + "/" + CONFIG_FILE;
         }
-        LOGGER.info("config file: {}", configPath);
+
+        LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>Start generate>>>>>>>>>>>>>>>>>>>>>>>");
+        LOGGER.info("Config file: {}", configPath);
 
         Properties props = new Properties();
         InputStream in = new BufferedInputStream(new FileInputStream(configPath));
@@ -55,13 +57,15 @@ public class OrmGeneratorMain {
         param.setJdbcPassword(props.getProperty("jdbc.password"));
         param.setDatabaseSchema(props.getProperty("jdbc.schema"));
 
-        param.setPackageNamePo(props.getProperty("package.name.entity"));// 数据表实体类包名
-        param.setPackageNameQuery(props.getProperty("package.name.query"));
-        param.setPackageNameDao(props.getProperty("package.name.dao"));// DAO包名
-        param.setPackageNameMapper(props.getProperty("package.name.mapper"));// Mybatis Mapper包名
-        param.setPackageNameResponse(props.getProperty("package.name.response"));// dto包名
-        param.setPackageNameList(props.getProperty("package.name.list"));// list包名
-        param.setPackageNameManager(props.getProperty("package.name.manager"));
+        param.setPackageNameRoot("org.evan.springcloud.base");
+
+        String tablesStr = props.getProperty("generate.tables");
+
+        if (StringUtils.isNotBlank(tablesStr)) {
+            String[] tableArray = StringUtils.split(tablesStr, ",");
+            List<String> tableList = Arrays.asList(tableArray);
+            param.setTables(tableList);
+        }
 
         String tmp = props.getProperty("column.name.createtime");
         if (StringUtils.isNotBlank(tmp)) {
@@ -72,17 +76,19 @@ public class OrmGeneratorMain {
             param.setColumnUpdateTime(tmp);
         }
 
-        String tablesStr = props.getProperty("generate.tables");
-
-        if (StringUtils.isNotBlank(tablesStr)) {
-            String[] tableArray = StringUtils.split(tablesStr, ",");
-            List<String> tableList = Arrays.asList(tableArray);
-            param.setTables(tableList);
-        }
-
         LOGGER.info("{}", param);
+        LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         OrmCreator ormCreator = new OrmCreator();
         ormCreator.create(param);
     }
 }
+
+//        param.setPackageNamePo(props.getProperty("package.name.entity"));// 数据表实体类包名
+//        param.setPackageNameQuery(props.getProperty("package.name.query"));
+//        param.setPackageNameDao(props.getProperty("package.name.dao"));// DAO包名
+//        param.setPackageNameMapper(props.getProperty("package.name.mapper"));// Mybatis Mapper包名
+//        param.setPackageNameResponse(props.getProperty("package.name.response"));// dto包名
+//        param.setPackageNameList(props.getProperty("package.name.list"));// list包名
+//        param.setPackageNameManager(props.getProperty("package.name.manager"));
+

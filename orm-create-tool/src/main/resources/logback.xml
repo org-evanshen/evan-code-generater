@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+        <contextName></contextName>
+
+    <property name="PATTERN_SYSTEM"
+              value="%d{yyyy-MM-dd HH:mm:ss} %5p [%15.15t] %logger{45} : %m%n"/>
+    <property name="FILE_LOG_PATTERN" value="%d{yy-MM-dd HH:mm:ss} [%20thread] %-5level %-50logger{1} : %msg%n"/>
+
+    <property name="PATTERN_ORM"
+              value="%m%n"/>
+
+    <appender name="CONSOLE_SYSTEM" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+        <encoder>
+            <Pattern>${PATTERN_SYSTEM}</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="PATTERN_ORM" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+        <encoder>
+            <Pattern>${PATTERN_ORM}</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <logger name="org.evanframework.toolbox" level="INFO" addtivity="true" >
+        <appender-ref ref="PATTERN_ORM" />
+    </logger>
+
+    <root >
+        <appender-ref ref="CONSOLE_SYSTEM" />
+    </root>
+
+</configuration>

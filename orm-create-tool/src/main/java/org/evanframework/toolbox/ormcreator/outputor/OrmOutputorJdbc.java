@@ -1,7 +1,7 @@
 package org.evanframework.toolbox.ormcreator.outputor;
 
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam;
-import org.evanframework.toolbox.ormcreator.domain.OrmTemplete;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam;
+import org.evanframework.toolbox.ormcreator.model.OutputModel;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ public class OrmOutputorJdbc extends AbstractOrmOutputor implements OrmOutputor.
 		super(param);
 	}
 
-	public void outPut(OrmTemplete outputor, Map<String, Object> mapOutputor) {
+	public void outPut(OutputModel outputor, Map<String, Object> mapOutputor) {
 		String template;
 
 		String dataBaseType = outputor.getParam().getDatabaseType().name();

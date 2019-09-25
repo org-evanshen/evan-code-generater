@@ -4,6 +4,7 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.PropertySet;
 
+@Deprecated
 public class OrmGeneratorTask extends Task {
 
 	private PropertySet propertyset;

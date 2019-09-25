@@ -1,6 +1,6 @@
 package org.evanframework.toolbox.ormcreator.datatypeconvertor;
 
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam.DatabaseType;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam.DatabaseType;
 
 /**
  * 数据类型转换器

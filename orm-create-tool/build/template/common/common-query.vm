@@ -1,0 +1,108 @@
+package ${outputor.packageName};
+
+#set($param=$outputor.param)
+#set($className=${outputor.className})
+
+import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+*$!{outputor.comment} 查询对象
+*/
+public class ${className}QueryDTO extends ${outputor.param.baseQueryClass} implements ${outputor.param.queryInterface}, Serializable {
+	private static final long serialVersionUID = ${outputor.serialVersionUid}1L;
+		
+	##属性
+	#foreach($column in $outputor.columns)
+		#set($dataType=${column.dataType})
+        #set($length=${column.length})
+		#set($fieldName=${column.fieldName})
+		#set($columnName=${column.columnName})
+		#set($comment=${column.comment})
+		#if($column.isPk=="1" || $column.fieldName=="status")
+			#if($column.fieldName=="status")
+
+            	@ApiModelProperty(value = "$comment")
+				private ${dataType} ${fieldName};//$!comment
+			#end
+
+        	@ApiModelProperty(value = "$comment 数组")
+			private ${dataType}[] ${fieldName}Array;//$!comment
+		#elseif("$column.dataType"=="BigDecimal" || "$column.dataType"=="Date")
+
+        	@ApiModelProperty(value = "$comment 开始")
+			private ${dataType} ${fieldName}From;//$!comment
+
+        	@ApiModelProperty(value = "$comment 结束")
+			private ${dataType} ${fieldName}To;//$!comment
+        #else
+
+        	@ApiModelProperty(value = "$comment")
+    		private ${dataType} ${fieldName};//$!comment
+		#end
+		#set($comment='')				
+	#end
+
+	##gettor settor
+	#foreach($column in $outputor.columns)
+		#set($dataType=${column.dataType})
+        #set($length=${column.length})
+		#set($fieldName=${column.fieldName})			
+		#set($columnName=${column.columnName})
+		#set($comment=${column.comment})
+		#if($column.isPk=="1" || $column.fieldName=="status")
+			#if($column.fieldName=="status")
+				/***$!column.comment*/
+            	public $column.dataType get${column.fieldNameFirstCharUpcase}() {
+            		return ${column.fieldName};
+            	}
+            
+            	/***$!column.comment*/
+            	public void set${column.fieldNameFirstCharUpcase}(${column.dataType} ${column.fieldName}) {
+            		this.${column.fieldName} = ${column.fieldName};
+            	}	
+    			#end
+			/***$!comment*/
+        	public ${dataType}[] get${column.fieldNameFirstCharUpcase}Array() {
+        		return ${column.fieldName}Array;
+        	}
+			/***$!column.comment*/
+        	public void set${column.fieldNameFirstCharUpcase}Array(${column.dataType}... ${column.fieldName}Array) {
+        		this.${column.fieldName}Array = ${column.fieldName}Array;
+        	}
+		#elseif("$column.dataType"=="BigDecimal" || "$column.dataType"=="Date") 
+        	/***$!column.comment*/
+        	public $column.dataType get${column.fieldNameFirstCharUpcase}From() {
+        		return ${column.fieldName}From;
+        	}
+        
+        	/***$!column.comment*/
+        	public void set${column.fieldNameFirstCharUpcase}From(${column.dataType} ${column.fieldName}From) {
+        		this.${column.fieldName}From = ${column.fieldName}From;
+        	}
+			
+			 /***$!column.comment*/
+        	public $column.dataType get${column.fieldNameFirstCharUpcase}To() {
+        		return ${column.fieldName}To;
+        	}
+        
+        	/***$!column.comment*/
+        	public void set${column.fieldNameFirstCharUpcase}To(${column.dataType} ${column.fieldName}To) {
+        		this.${column.fieldName}To = ${column.fieldName}To;
+        	}	
+		#else
+			/***$!column.comment*/
+        	public $column.dataType get${column.fieldNameFirstCharUpcase}() {
+        		return ${column.fieldName};
+        	}
+        
+        	/***$!column.comment*/
+        	public void set${column.fieldNameFirstCharUpcase}(${column.dataType} ${column.fieldName}) {
+        		this.${column.fieldName} = ${column.fieldName};
+        	}			
+		#end		
+		#set($comment=${column.comment})
+	#end
+}

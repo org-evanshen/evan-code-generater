@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.evanframework.toolbox.ormcreator.database.Database;
 import org.evanframework.toolbox.ormcreator.database.DatabaseFactory;
-import org.evanframework.toolbox.ormcreator.domain.Column;
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam;
-import org.evanframework.toolbox.ormcreator.domain.Table;
+import org.evanframework.toolbox.ormcreator.model.Column;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam;
+import org.evanframework.toolbox.ormcreator.model.Table;
 import org.evanframework.toolbox.utils.CookieUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

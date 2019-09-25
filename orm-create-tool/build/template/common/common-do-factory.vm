@@ -1,0 +1,31 @@
+package ${outputor.packageName};
+
+#set($className=${outputor.className})
+#set($objectName=$outputor.objectName)
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+*$!{outputor.comment} 领域模型创建工厂
+*/
+@Component
+public class ${className}Factory {
+	public ${className}Domain create(${className}AddUpdateDTO ${objectName}AddUpdateParams) {
+		${className} ${objectName} = new ${className}();
+		BeanUtil.quickCopy(${objectName}AddUpdateParams, ${objectName});
+		return ${objectName};
+	}
+
+	public ${className}Domain create(long ${objectName}Id, ${className}AddUpdateDTO ${objectName}AddUpdateParams) {
+		${className}Domain ${objectName} = create(${objectName}AddUpdateParams);
+		${objectName}.setId(${objectName}Id);
+		return ${objectName};
+	}
+
+	public ${className}Domain create(${className} ${objectName}) {
+		${className}Domain ${objectName}Domain = new ${className}Domain();
+		BeanUtil.quickCopy(${objectName}, ${objectName}Domain);
+		return ${objectName};
+	}
+}

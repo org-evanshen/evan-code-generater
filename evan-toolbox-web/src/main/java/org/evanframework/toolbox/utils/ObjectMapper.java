@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class ObjectMapper extends com.fasterxml.jackson.databind.ObjectMapper {
-	private static final long serialVersionUID = 568314967843082031L;
+	private static final long serialVersionUid = 568314967843082031L;
 
 	public ObjectMapper() {
 		super();

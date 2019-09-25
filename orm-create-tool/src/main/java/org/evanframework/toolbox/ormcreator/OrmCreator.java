@@ -4,10 +4,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.evanframework.toolbox.ormcreator.database.Database;
 import org.evanframework.toolbox.ormcreator.database.DatabaseFactory;
 import org.evanframework.toolbox.ormcreator.datatypeconvertor.DataTypeConvertorFactory;
-import org.evanframework.toolbox.ormcreator.domain.Column;
-import org.evanframework.toolbox.ormcreator.domain.OrmCreatorParam;
-import org.evanframework.toolbox.ormcreator.domain.OrmTemplete;
-import org.evanframework.toolbox.ormcreator.domain.Table;
+import org.evanframework.toolbox.ormcreator.model.Column;
+import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam;
+import org.evanframework.toolbox.ormcreator.model.OutputModel;
+import org.evanframework.toolbox.ormcreator.model.Table;
 import org.evanframework.toolbox.ormcreator.outputor.OrmOutputor;
 import org.evanframework.toolbox.ormcreator.utils.OrmCreatorUtil;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ import java.util.Random;
  * @since
  */
 public class OrmCreator {
-	private static final Logger logger = LoggerFactory.getLogger(OrmCreator.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(OrmCreator.class);
 
 	private OrmCreatorParam param = null;
 
@@ -42,7 +42,7 @@ public class OrmCreator {
 	public void create(OrmCreatorParam param) {
 		this.param = param;
 
-		List<OrmTemplete> ormTempletesForOut = getOrmTempletes(param);
+		List<OutputModel> ormTempletesForOut = getOrmTempletes(param);
 
 		output(ormTempletesForOut);
 	}
@@ -55,13 +55,13 @@ public class OrmCreator {
 	 * 
 	 * @param param
 	 */
-	private List<OrmTemplete> getOrmTempletes(OrmCreatorParam param) {
+	private List<OutputModel> getOrmTempletes(OrmCreatorParam param) {
 		database = DatabaseFactory.getDatabase(param.getDatabaseType(), param);
 		database.openConn();
 		ResultSet rs = database.getTables(param.getTables());
 		// 创建输出对象集合，一个表一个对象
-		List<OrmTemplete> ormTempletesForOut = new ArrayList<OrmTemplete>();
-		OrmTemplete o = null;
+		List<OutputModel> ormTempletesForOut = new ArrayList<OutputModel>();
+		OutputModel o = null;
 		Table table = null;
 		try {
 			while (rs.next()) {// 遍历表
@@ -84,17 +84,18 @@ public class OrmCreator {
 	 * author: <a href="mailto:shenw@hundsun.com">Evan.Shen</a><br>
 	 * version: 2012-1-13 下午12:40:39 <br>
 	 */
-	private void output(List<OrmTemplete> ormTempletesForOut) {
+	private void output(List<OutputModel> ormTempletesForOut) {
 		OrmOutputor ormOutputor = new OrmOutputor(param);
 
 		Random random = new Random(4);
-		for (OrmTemplete o : ormTempletesForOut) {
+		for (OutputModel o : ormTempletesForOut) {
 			// System.out.println("=================" + outputor.getTableName()
 			// + "=================");
 			// logger.info("==========================");
-			logger.info("table:[" + o.getTableName() + "]");
 
-			o.setSerialVersionUID(System.currentTimeMillis() + random.nextInt());
+			LOGGER.info("\n>>>>>>>>>>>>>>>>> generate: [{}]>>>>>>>>>>>>>>>>>>>>>>>",o.getTableName());
+
+			o.setSerialVersionUid(System.currentTimeMillis() + random.nextInt());
 
 			ormOutputor.outPub(o);
 		}
@@ -109,14 +110,15 @@ public class OrmCreator {
 	 * @param table
 	 * @throws SQLException
 	 */
-	private OrmTemplete getOrmTempleteByTable(Table table) throws SQLException {
+	private OutputModel getOrmTempleteByTable(Table table) throws SQLException {
 		// 创建输出对象
-		OrmTemplete ormTemplete = new OrmTemplete();
+		OutputModel ormTemplete = new OutputModel();
 
-		ormTemplete.setPackageNameDao(param.getPackageNameDao());
-		ormTemplete.setPackageNamePo(param.getPackageNamePo());
-		ormTemplete.setBasePoName(param.getBasePoName());
-		ormTemplete.setBaseDaoName(param.getBaseDaoName());
+//		ormTemplete.setPackageNameDao(param.getPackageNameDao());
+//		ormTemplete.setPackageNamePo(param.getPackageNamePo());
+//		ormTemplete.setBasePoName(param.getBasePoName());
+//		ormTemplete.setBaseDaoName(param.getBaseDaoName());
+
 		ormTemplete.setParam(this.param);
 
 		pubTableDataToOrmTemplete(table.getTableName(), table.getTableComments(), ormTemplete);
@@ -136,10 +138,10 @@ public class OrmCreator {
 	 * @param ormTemplete
 	 * @throws SQLException
 	 */
-	private void pubColumnsDataToOrmTemplete(String tableName, OrmTemplete ormTemplete) throws SQLException {
+	private void pubColumnsDataToOrmTemplete(String tableName, OutputModel ormTemplete) throws SQLException {
 		List<Column> columns = new ArrayList<Column>();// 所有列
-		List<Column> columnNotPKs = new ArrayList<Column>();// 非主键列
-		List<Column> columnPKs = new ArrayList<Column>();// 主键列
+		List<Column> columnNotPks = new ArrayList<Column>();// 非主键列
+		List<Column> columnPks = new ArrayList<Column>();// 主键列
 
 		// 主键列字符串 如：单主键 "ID",多主键："CODE,TYPE"
 		StringBuilder pkColumnNames = new StringBuilder();
@@ -170,7 +172,7 @@ public class OrmCreator {
 		while (rs.next()) {
 			column = database.resultSetToColumn(rs);
 
-			javaFieldNameFirstCharUpcase = OrmCreatorUtil.convertDBNameToJavaName(column.getColumnName());
+			javaFieldNameFirstCharUpcase = OrmCreatorUtil.convertDbNameToJavaName(column.getColumnName());
 			column.setFieldNameFirstCharUpcase(javaFieldNameFirstCharUpcase);// java名首字母大写
 			javaFieldName = OrmCreatorUtil.toFirstCharLow(javaFieldNameFirstCharUpcase);
 			column.setFieldName(javaFieldName);// java名名首字母小写
@@ -183,9 +185,9 @@ public class OrmCreator {
 				pkParams.append("," + column.getDataType() + " " + column.getFieldName());// 合并主键参数
 				pkIbatisDataType = OrmCreatorUtil.convertJavaDataTypeToSimple(column.getDataType());
 				pkJavaDataType = column.getDataType();
-				columnPKs.add(column);
+				columnPks.add(column);
 			} else {
-				columnNotPKs.add(column);
+				columnNotPks.add(column);
 			}
 		}
 
@@ -196,9 +198,9 @@ public class OrmCreator {
 		}
 
 		ormTemplete.setColumns(columns);
-		ormTemplete.setColumnNotPKs(columnNotPKs);
-		ormTemplete.setColumnPKs(columnPKs);
-		ormTemplete.setPkCount(columnPKs.size());
+		ormTemplete.setColumnNotPks(columnNotPks);
+		ormTemplete.setColumnPks(columnPks);
+		ormTemplete.setPkCount(columnPks.size());
 		ormTemplete.setPkColumnNames(pkColumnNames.toString());
 		ormTemplete.setPkParams(pkParams.toString());
 		ormTemplete.setPkFieldNames(pkFieldNames.toString());
@@ -216,8 +218,8 @@ public class OrmCreator {
 	 * @param tableComment
 	 * @param ormTemplete
 	 */
-	private void pubTableDataToOrmTemplete(String tableName, String tableComment, OrmTemplete ormTemplete) {
-		String className = OrmCreatorUtil.convertDBNameToJavaName(tableName);// 表名装换成类名
+	private void pubTableDataToOrmTemplete(String tableName, String tableComment, OutputModel ormTemplete) {
+		String className = OrmCreatorUtil.convertDbNameToJavaName(tableName);// 表名装换成类名
 		String prefixRemove = this.param.getPrefixRemove();
 		if (StringUtils.isNotBlank(prefixRemove)) { // 是否去掉前缀
 			int length = prefixRemove.length();
@@ -234,6 +236,8 @@ public class OrmCreator {
 		ormTemplete.setObjectName(objectName);
 		ormTemplete.setComment(tableComment); // 表注释
 		ormTemplete.setTableAlias(OrmCreatorUtil.convertTableNameToTableAlias(tableName));
+		ormTemplete.setPackageName(this.param.getPackageNameRoot() + "." + OrmCreatorUtil.convertTableNameToSubPackageName(tableName));
+
 
 	}
 }

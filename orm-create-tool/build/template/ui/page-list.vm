@@ -1,0 +1,83 @@
+#set($objectName=$outputor.objectName)
+#set($columnNotPks=$outputor.columnNotPks)
+
+<div class="searchBox">
+	<form method="get" id="form_search">
+		<h5><span>搜索</span></h5>
+		<table>
+			<tr>
+				<th>:</th>
+                <td><input name="aa" type="text" v-model=""/></td>
+				<th>:</th>
+				<td><select></select></td>
+				<th>:</th>
+				<td><input name="modifyFrom" class="inp-w70" type="text" v-model=""  dateISO="true" onclick="WdatePicker()">
+                    - <input name="modifyTo" class="inp-w70" type="text" v-model=""  dateISO="true"  onclick="WdatePicker()"></td>
+				<th>:</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td></td>
+				<th></th>
+				<td></td>
+				<th></th>
+				<td></td>
+				<td >					
+					<input type="submit" id="btn_search" value="搜索" class="btn" />
+                    <input type="button" id="btn_reset" value="清空" class="btn">
+                 </td>
+			</tr>
+		</table>
+	</form>	
+</div>
+<div id="tool" class="tool">	
+	<span>
+		<a id="bt_add" hidefocus="true" class="bt_add"  href="add.htm" >添加</a>			
+	</span>	
+	<span>
+		<a id="bt_publish" hidefocus="true" class="bt_all" href="javascript:void(0);">发布</a>
+    </span>
+	<span>
+		<a id="bt_unpublish" hidefocus="true" class="bt_no" href="javascript:void(0);">下线</a>
+    </span>	
+	<div >
+
+    </div>
+</div>
+<div id="list" class="listBox">
+	<h5><span>列表</span></h5>
+	<table>
+		<tr>
+			<th width="20"><input type="checkbox" class="chk_all" id="chk_all1"/></th>
+			<th width="30">序号</th>
+			#foreach($column in $columnNotPks)
+				<th>$!column.comment</th>
+			#end
+		</tr>
+        <template v-for="o in items">
+			<tr >
+				<td >
+					<input type="checkbox" v-model="o.id" name="idsStr" v-bind:id="'chk_' + o.id" />
+				</td>
+				<td >
+					<label v-bind:for="'chk_' + o.id">&nbsp;{{o.no}}</label>
+				</td>
+				#foreach($column in $columnNotPks)
+				<td >
+                    {{o.$column.fieldName}
+				</td>
+				#end
+				<td >
+					<a href="e${o.id}.htm">修改</a>
+					<a href="javascript:void(0);" class="delete">删除</a>
+				</td>
+			</tr>
+		</template>
+		<tr v-if="">
+			<td  colspan="10" >
+				非常抱歉，没有符合条件的数据！
+			</td>
+		</tr>
+	</table>
+</div>

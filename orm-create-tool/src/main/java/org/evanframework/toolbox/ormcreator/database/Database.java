@@ -1,7 +1,7 @@
 package org.evanframework.toolbox.ormcreator.database;
 
-import org.evanframework.toolbox.ormcreator.domain.Column;
-import org.evanframework.toolbox.ormcreator.domain.Table;
+import org.evanframework.toolbox.ormcreator.model.Column;
+import org.evanframework.toolbox.ormcreator.model.Table;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

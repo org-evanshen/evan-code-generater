@@ -14,7 +14,7 @@
 		<copy todir="${target.dir}">
 			<fileset dir=".">
 				<include name="orm-generator.*" />
-				<include name="template/*.vm" />
+				<include name="template/**" />
 			</fileset>
 		</copy>
 		<zip destfile="${target.dir}/${target.file}">

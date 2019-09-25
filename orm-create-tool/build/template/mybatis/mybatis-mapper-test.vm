@@ -1,0 +1,83 @@
+package ${outputor.packageName}.repository;
+
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
+#set($className=${outputor.className})
+#set($objectName=$outputor.objectName)
+
+public class ${className}MapperTest extends JdbcTestCaseSupport   {
+	private static final Logger log = LoggerFactory.getLogger(${className}Mapper.class);
+
+	@Autowired
+	private ${className}Mapper ${objectName}Mapper;
+
+	@Test
+	public void testSelectById() {
+		${className} ${objectName} = ${objectName}Mapper.load(RandomUtils.nextInt(1,5));
+		log.info("=======>> testLoad " + ${objectName});
+	}
+
+	@Test
+	public void testSelectBatchByIds() {
+		List idList = new ArrayList();
+		idList.add(RandomUtils.nextInt(1,60));
+		idList.add(RandomUtils.nextInt(1,80));
+		List<${className}> demos = demoMapper.selectBatchByIds(idList);
+
+		LOGGER.info(">>>> demoMapper.testSelectBatchByIds({})={}", idList, demos);
+	}
+
+	@Test
+	public void testInsert() {
+		${className} ${objectName} = new ${className}();
+
+		${objectName}Mapper.insert(${objectName});
+        log.info("=======>> testInsert " + ${objectName});
+	}
+
+	@Test
+	public void testUpdate() {
+		${className} ${objectName} = new ${className}();
+
+		${objectName}.setId(RandomUtils.nextInt(1,5));
+
+		${objectName}Mapper.update(${objectName});
+	}
+
+	@Test
+	public void testUpdateStatus() {
+		${objectName}Mapper.updateStatus(RandomUtils.nextInt(1,5), 2);
+	}
+
+    @Test
+    public void testUpdateIsDeleted() {
+        ${objectName}Mapper.updateIsDeleted(RandomUtils.nextInt(1,5), 1);
+    }
+
+	@Test
+	public void testDelete() {
+		${objectName}Mapper.delete(1L);
+	}
+
+	@Test
+	public void testQueryList() {
+		${className}QueryDTO query = new ${className}QueryDTO();
+
+		List<${className}> list =  ${objectName}Mapper.queryList(query);
+
+        log.info("=======>> testQueryList " + list);
+	}
+
+	@Test
+	public void testQueryCount() {
+		${className}QueryDTO query = new ${className}QueryDTO();
+
+		int count = ${objectName}Mapper.queryCount(query);
+
+        log.info("=======>> testQueryCount " + count);
+	}
+}
