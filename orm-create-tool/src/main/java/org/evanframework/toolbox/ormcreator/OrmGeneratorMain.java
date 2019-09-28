@@ -57,7 +57,7 @@ public class OrmGeneratorMain {
         param.setJdbcPassword(props.getProperty("jdbc.password"));
         param.setDatabaseSchema(props.getProperty("jdbc.schema"));
 
-        param.setPackageNameRoot("org.evan.springcloud.base");
+        param.setPackageNameRoot(props.getProperty("package.name.root"));
 
         String tablesStr = props.getProperty("generate.tables");
 

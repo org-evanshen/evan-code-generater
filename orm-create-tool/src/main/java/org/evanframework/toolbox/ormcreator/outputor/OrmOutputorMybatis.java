@@ -1,6 +1,5 @@
 package org.evanframework.toolbox.ormcreator.outputor;
 
-import org.apache.tools.ant.types.Mapper;
 import org.evanframework.toolbox.ormcreator.model.OrmCreatorParam;
 import org.evanframework.toolbox.ormcreator.model.OutputModel;
 import org.evanframework.toolbox.ormcreator.utils.OrmCreatorUtil;
@@ -29,7 +28,7 @@ public class OrmOutputorMybatis extends AbstractOrmOutputor implements OrmOutput
 
         template = ormTemplatePath + "mybatis/mybatis-mapper-class.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write("domain", outputor.getClassName() + "Mapper.java", str);
+        write("domain" , outputor.getClassName() + "Mapper.java", str);
 
 //		template = ormTemplatePath + "common/mybatis-dao.vm";
 //		str = mergeTemplateToString(template, mapOutputor);

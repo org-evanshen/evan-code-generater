@@ -37,7 +37,7 @@ public class ${outputor.className}AddUpdateDTO implements Serializable {
 	}*#	
 
 	##默认构造函数
-	public ${outputor.className}() {}
+	public ${outputor.className}AddUpdateDTO() {}
 
 	##主键构造函数
 	/**

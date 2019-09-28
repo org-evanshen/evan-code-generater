@@ -20,7 +20,7 @@
 		<zip destfile="${target.dir}/${target.file}">
 			<fileset dir="${target.dir}">
 				<include name="orm-generator.*" />
-				<include name="template/*.vm" />				
+				<include name="template/**" />
 				<include name="lib/*.jar" />
 				<exclude name="lib/ant*.jar" />						
 			</fileset>			

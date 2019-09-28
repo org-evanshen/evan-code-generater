@@ -12,6 +12,6 @@ import java.util.Date;
 public class ${outputor.className}VO extends ${outputor.className} {
 	@Override
 	public String toString() {
-		return "${outputor.className}{} " + super.toString();
+		return "${outputor.className}VO{} " + super.toString();
 	}
 }

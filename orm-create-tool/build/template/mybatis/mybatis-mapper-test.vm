@@ -1,4 +1,4 @@
-package ${outputor.packageName}.repository;
+package test.${outputor.packageName}.repository;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -9,7 +9,7 @@ import java.util.List;
 #set($className=${outputor.className})
 #set($objectName=$outputor.objectName)
 
-public class ${className}MapperTest extends JdbcTestCaseSupport   {
+public class ${className}MapperTest extends MySQLTestCaseSupport   {
 	private static final Logger log = LoggerFactory.getLogger(${className}Mapper.class);
 
 	@Autowired
@@ -17,18 +17,18 @@ public class ${className}MapperTest extends JdbcTestCaseSupport   {
 
 	@Test
 	public void testSelectById() {
-		${className} ${objectName} = ${objectName}Mapper.load(RandomUtils.nextInt(1,5));
-		log.info("=======>> testLoad " + ${objectName});
+		${className} ${objectName} = ${objectName}Mapper.selectById(RandomUtils.nextLong(1,5));
+		log.info("=======>> testSelectById " + ${objectName});
 	}
 
 	@Test
 	public void testSelectBatchByIds() {
 		List idList = new ArrayList();
-		idList.add(RandomUtils.nextInt(1,60));
-		idList.add(RandomUtils.nextInt(1,80));
-		List<${className}> demos = demoMapper.selectBatchByIds(idList);
+		idList.add(RandomUtils.nextLong(1,60));
+		idList.add(RandomUtils.nextLong(1,80));
+		List<${className}> demos = ${objectName}Mapper.selectBatchByIds(idList);
 
-		LOGGER.info(">>>> demoMapper.testSelectBatchByIds({})={}", idList, demos);
+		LOGGER.info(">>>> testSelectBatchByIds({})={}", idList, demos);
 	}
 
 	@Test
@@ -43,19 +43,19 @@ public class ${className}MapperTest extends JdbcTestCaseSupport   {
 	public void testUpdate() {
 		${className} ${objectName} = new ${className}();
 
-		${objectName}.setId(RandomUtils.nextInt(1,5));
+		${objectName}.setId(RandomUtils.nextLong(1,5));
 
 		${objectName}Mapper.update(${objectName});
 	}
 
 	@Test
 	public void testUpdateStatus() {
-		${objectName}Mapper.updateStatus(RandomUtils.nextInt(1,5), 2);
+		${objectName}Mapper.updateStatus(RandomUtils.nextLong(1,5), 2);
 	}
 
     @Test
     public void testUpdateIsDeleted() {
-        ${objectName}Mapper.updateIsDeleted(RandomUtils.nextInt(1,5), 1);
+        ${objectName}Mapper.updateIsDeleted(RandomUtils.nextLong(1,5), 1);
     }
 
 	@Test

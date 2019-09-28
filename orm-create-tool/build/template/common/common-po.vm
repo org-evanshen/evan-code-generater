@@ -8,6 +8,7 @@ import java.util.Date;
 /**
 *$!{outputor.comment}数据库持久化对象
 */
+@ApiModel("$!{$!{outputor.comment}}")
 public class ${outputor.className} implements Serializable {
 	private static final long serialVersionUID = ${outputor.serialVersionUid}2L;
 	#*#foreach($column in $outputor.columns)
