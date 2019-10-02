@@ -35,4 +35,20 @@ public interface ${className}Mapper  {
 
 	/***/
 	int queryCount(${className}QueryDTO ${objectName}QueryDTO);
+
+	default PageResult<${className}> queryPage(${className}QueryDTO ${objectName}QueryDTO) {
+		if (${objectName}QueryDTO.getPageSize() == 0) {
+			${objectName}QueryDTO.setPageSize(${className}QueryDTO.DEFAULT_PAGE_SIZE);
+		}
+		int recordCount = queryCount(${objectName}QueryDTO);
+
+		PageResult<${className}> pageResult = new PageResult<>(${objectName}QueryDTO);
+		if (recordCount > 0) {
+			List<${className}> list = queryList(${objectName}QueryDTO);
+			pageResult.setData(list);
+		}
+		pageResult.setRecordCount(recordCount);
+
+		return pageResult;
+	}
 }
