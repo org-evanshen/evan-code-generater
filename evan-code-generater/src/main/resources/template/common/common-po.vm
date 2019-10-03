@@ -1,0 +1,71 @@
+package ${outputor.packageName};
+
+import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+*$!{outputor.comment}数据库持久化对象
+*/
+@ApiModel("$!{$!{outputor.comment}}")
+public class ${outputor.className} implements Serializable {
+	private static final long serialVersionUID = ${outputor.serialVersionUid}2L;
+	#*#foreach($column in $outputor.columns)
+		/**$!column.comment*/
+		public static final String ${column.columnName} = "${outputor.objectName}.${column.columnName}";
+	#end*#
+	##属性
+	#foreach($column in $outputor.columns)
+		##@Column(name = ${column.columnName})
+    	@ApiModelProperty(value = "$!column.comment")
+		private ${column.dataType} ${column.fieldName};//$!column.comment
+
+	#end	
+	
+	#*
+	private static final Map<String, String> mapPropertiesToColumns = new HashMap<String, String>();
+
+	static {
+		Column column = null;
+		for (Field field : ${outputor.className}.class.getDeclaredFields()) {
+			column = field.getAnnotation(Column.class);
+			if (column != null) {
+				mapPropertiesToColumns.put(field.getName(), column.name());
+			}
+		}
+	}*#	
+
+	##默认构造函数
+	public ${outputor.className}() {}
+
+	##主键构造函数
+	/**
+	*
+	#foreach($column in $outputor.columnPks)
+	 *@param ${column.fieldName} -- $!{column.comment}
+	#end
+	*/
+	public ${outputor.className}($outputor.pkParams) {
+		#foreach($column in $outputor.columnPks)
+			this.${column.fieldName} = ${column.fieldName};
+		#end
+	}
+
+	##gettor settor
+	#foreach($column in $outputor.columns)
+	/**$!column.comment*/
+	public $column.dataType get${column.fieldNameFirstCharUpcase}() {
+		return ${column.fieldName};
+	}
+	/**$!column.comment*/
+	public void set${column.fieldNameFirstCharUpcase}(${column.dataType} ${column.fieldName}) {
+		this.${column.fieldName} = ${column.fieldName};
+	}
+	#end
+	
+	@Override
+	public String toString() {
+		return "${outputor.className} [#foreach($column in $outputor.columns)#if($foreach.count>1),#end ${column.fieldName}=" + ${column.fieldName} + "#end]";
+	}
+}

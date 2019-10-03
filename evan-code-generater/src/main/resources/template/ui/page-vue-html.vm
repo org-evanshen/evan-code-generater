@@ -1,0 +1,81 @@
+<el-row >
+    <el-form :model="query">
+        <table class="table-search">
+			<tr>
+				<th>:</th>
+                <td><el-input v-model="query."></el-input></td>
+				<th>:</th>
+				<td>
+					<el-select v-model="query." >
+                        <el-option label="--请选择--" value=""></el-option>
+                        <el-option value="1" label="正常"></el-option>
+                        <el-option value="2" label="冻结"></el-option>
+                    </el-select>
+				</td>
+				<th>创建日期:</th>
+				<td>
+				  <el-date-picker v-model="query.gmtCreateFrom" class="date-picker"></el-date-picker>
+                    -
+					<el-date-picker v-model="query.gmtCreateFrom" class="date-picker"></el-date-picker>
+					</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td></td>
+				<th></th>
+				<td></td>
+				<th></th>
+				 <td class="button-box">
+                    <el-button type="primary" @click="pagination()" icon="search">搜索</el-button>
+                    <el-button @click="resetQuery">清空</el-button>
+                    <el-button type="primary" @click="edit('')" class="el-icon-plus">新增</el-button>
+                </td>
+			</tr>
+		 </table>
+		</el-form>
+
+		  <!--列表-->
+    <el-table :data="list" highlight-current-row v-loading="loading">
+	    <el-table-column class="column" label="序号" width="60">
+            <template scope="scope">{{ page.first + scope.$index }}</template>
+        </el-table-column>
+        <el-table-column class="column" prop="id" label="ID" width="60"></el-table-column>
+		#foreach($column in $columnNotPks)
+			<el-table-column class="column" prop="${column.fieldName}" label="$column.comment" ></el-table-column>
+		#end
+        <el-table-column label="操作"  width="300px">
+            <template scope="scope">
+                <el-button v-if="scope.row.status == 1" size="small" @click="updateStatus(scope)" type="primary">冻结</el-button>
+                <el-button v-if="scope.row.status == 2" size="small" @click="updateStatus(scope)" type="danger">解冻</el-button>
+                <el-button size="small" @click="edit(scope.row.id)" type="primary">修改</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+
+    <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="query.pageNo"
+        :page-sizes="[15, 20, 50, 100]"
+        :page-size="query.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="page.recordCount">
+    </el-pagination>
+	
+	<el-dialog title="$screen_title" :visible.sync="showModel" @close="cancel">
+		<el-form :model="${objectName}" :rules="rules" ref="${objectName}Form" label-width="120px">
+			<el-input v-model="${objectName}.id" type="hidden"/>
+			#foreach($column in $columnNotPks)
+				 <el-col :span="8">
+					   <el-form-item label="$!{column.comment}：" prop="${column.fieldName}">
+							<el-input name="${column.fieldName}" v-model="${column.fieldName}" maxlength="${column.Length}" #if("$!column.jdbcDataType"=="DECIMAL")number#end type="text"/></el-input>
+						</el-form-item>
+				</el-col>
+			#end
+			</el-form>
+		<el-col :span="24" class="submitBar">
+			<el-button type="primary" @click="edit()">确定</el-button>
+			<el-button @click="cancel">取消</el-button>
+		</el-col>
+	</el-dialog>
+</el-row >

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ormGeneratorBuild" default="build" basedir=".">
+
+	<property name="author" value="evan.shen" />
+	<property name="target.dir" value="../target" />
+	<property name="dist.dir" value="dist" />
+	<property name="dist.file" value="orm-generator.zip" />
+	
+	<target name="build" description="Orm Generating Build" >
+		<delete dir="${dist.dir}"/>
+
+		<copy todir="${dist.dir}/lib" >
+			<fileset dir="${target.dir}">
+				<include name="orm-create-tool*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir}" >
+			<fileset dir="${target.dir}">
+				<include name="lib/*.jar" />
+				<exclude name="lib/ant*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir}">
+			<fileset dir=".">
+				<include name="orm-generator.*" />
+				<include name="template/**" />
+			</fileset>
+		</copy>
+		<exec executable="/bin/bash" dir="${dist.dir}">
+			<arg line="-c chmod a+x ./orm-generator.sh"/>
+		</exec>
+
+		<zip destfile="${dist.dir}/${dist.file}">
+			<fileset dir="${target.dir}">
+				<include name="orm-generator.*" />
+				<include name="template/**" />
+				<include name="lib/*.jar" />
+			</fileset>			
+		</zip>
+	</target>
+
+<!--	<target name="zip" description="Orm Generating Build" >-->
+
+<!--	</target>-->
+</project>

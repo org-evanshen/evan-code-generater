@@ -1,0 +1,82 @@
+<template src="./${outputor.className}.html"></template>
+<script>
+
+    import Constant from '@/constant/Constant.vue'
+    import ${outputor.className}Service from '@/service/model/${outputor.className}Service.vue'
+
+    export default {
+        data() {
+            return {
+				showModel:false,
+                loading:false,
+				formName:'${objectName}Form',
+				 ${objectName}:{},
+				 query:{},
+				 list: [],
+				 page:{},
+				 rules: {
+					//userName: [
+					//    {required: true, message: '请输入姓名'}
+					//	 {validator: checkUserNo}
+					//],
+				 }
+			}
+		 },
+		created() {
+            this.pagination();
+		},
+		methods:{
+			 sizeChange: function (pageSize) {
+                this.query.pageSize = pageSize;
+                this.pagination();
+            },
+            currentChange: function (pageNo) {
+                this.query.pageNo = pageNo;
+                this.pagination();
+            },
+			resetQuery(){
+				this.query = {}
+			},
+			pagination(query) {
+				${outputor.className}Service.pageList(query, (res) => {
+					this.list = res.data;
+					this.page = res.page;
+                });
+            },
+			edit(id){
+				this.showModel = true;
+				if(id){
+					${outputor.className}Service.load(id,(res=>{
+						this.${objectName} = res.data;
+					}))
+				}
+			},
+			updateStatus(id,status){
+				${outputor.className}Service..updateStatus(id, status, (res) => {
+                    this.$message({type: 'success', message: "状态修改成功"});
+					this.pagination();
+                });
+			},
+			cancel(){
+				 this.refs[this.formName].resetFields();
+				 this.showModel = false;
+				 this.${objectName} = {};
+			},
+			summitEdit(){
+				 this.refs[this.formName].validate((valid) => {
+                    if (valid) {
+						${outputor.className}Service.edit(this.${objectName}, (res) => {
+                            this.$message({type: 'success', message: res.msg})
+							this.cancel();
+							this.pagination();
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+			}
+		}
+   }		 
+</script>
+//备注
+//this.refs[this.formName].resetFields(); 修改为 this.$refs

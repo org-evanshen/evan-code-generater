@@ -1,0 +1,54 @@
+package ${outputor.packageName}.repository;
+
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import java.io.Serializable;
+
+#set($className=${outputor.className})
+#set($objectName=$outputor.objectName)
+
+public interface ${className}Mapper  {
+	/***/
+	${className} selectById(${outputor.pkJavaDataType} id);
+
+	#if($outputor.pkCount == 1)
+		List<${className}> selectBatchByIds(Collection<${outputor.pkJavaDataType} > ids);
+	#end
+
+	/***/
+	void insert(${className} ${objectName});
+
+	/***/
+	void update(${className} ${objectName});
+
+	/***/
+	void updateStatus(@Param("id") ${outputor.pkJavaDataType} id, @Param("status") Serializable status);
+
+    /***/
+    void updateIsDeleted(@Param("id") ${outputor.pkJavaDataType} id, @Param("isDeleted") int status);
+
+	/***/
+	void delete(${outputor.pkJavaDataType} id);
+
+	/***/
+	List<${className}> queryList(${className}QueryDTO ${objectName}Query);
+
+	/***/
+	int queryCount(${className}QueryDTO ${objectName}QueryDTO);
+
+	default PageResult<${className}> queryPage(${className}QueryDTO ${objectName}QueryDTO) {
+		if (${objectName}QueryDTO.getPageSize() == 0) {
+			${objectName}QueryDTO.setPageSize(${className}QueryDTO.DEFAULT_PAGE_SIZE);
+		}
+		int recordCount = queryCount(${objectName}QueryDTO);
+
+		PageResult<${className}> pageResult = new PageResult<>(${objectName}QueryDTO);
+		if (recordCount > 0) {
+			List<${className}> list = queryList(${objectName}QueryDTO);
+			pageResult.setData(list);
+		}
+		pageResult.setRecordCount(recordCount);
+
+		return pageResult;
+	}
+}
