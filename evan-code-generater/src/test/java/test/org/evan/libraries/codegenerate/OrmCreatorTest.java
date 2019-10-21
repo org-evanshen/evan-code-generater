@@ -25,13 +25,13 @@ public class OrmCreatorTest {
 //        param.setOrmType(OrmType.mybatis);
 //        param.setDatabaseType(DatabaseType.mysql);
 
-        param.setJdbcUrl("jdbc:mysql://116.62.114.198:3306/information_schema?useSSL=false");
-        param.setJdbcUser("root");
-        param.setJdbcPassword("MiZhi001");
+        param.setJdbcUrl("jdbc:mysql://121.40.245.248:3306/information_schema?useSSL=false");
+        param.setJdbcUser("shumai");
+        param.setJdbcPassword("ShuMai@001");
 //		param.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/information_schema?useSSL=false");
 //		param.setJdbcUser("root");
 //		param.setJdbcPassword("Shen0001");
-        param.setDatabaseSchema("btbs_base");
+        param.setDatabaseSchema("crawler");
 
         param.setPackageNameRoot("org.evan.springcloud.base");
 
@@ -41,9 +41,9 @@ public class OrmCreatorTest {
         // 生成的表 可选 不提供该参数则生成全部表
         List<String> tables = new ArrayList<String>();
         tables.add("demo");
-        tables.add("demo_child1");
-        tables.add("pub_attach");
-        tables.add("pub_picture");
+//        tables.add("demo_child1");
+//        tables.add("pub_attach");
+//        tables.add("pub_picture");
         param.setTables(tables);
 
         OrmCreator ormCreator = new OrmCreator();

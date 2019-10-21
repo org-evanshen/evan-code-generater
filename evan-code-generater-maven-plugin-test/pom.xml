@@ -28,11 +28,9 @@
                 <artifactId>evan-code-generater-maven-plugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <configuration>
-                    <jdbcUrl>
-                        jdbc:mysql://rm-nh44p906fpfgv9707o.mysql.rds.aliyuncs.com:3306/information_schema?useSSL=false
-                    </jdbcUrl>
+                    <jdbcUrl>jdbc:mysql://121.40.245.248:3306/information_schema?useSSL=false</jdbcUrl>
                     <jdbcUser>shumai</jdbcUser>
-                    <jdbcPassword>Shumai0101</jdbcPassword>
+                    <jdbcPassword>ShuMai@001</jdbcPassword>
                     <databaseSchema>crawler</databaseSchema>
                     <packageNameRoot>com.shumai.tianyandata.merchant</packageNameRoot>
                     <columnCreateTime>create_time</columnCreateTime>
@@ -48,9 +46,8 @@
 
     <repositories>
         <repository>
-            <id>nexus-releases</id>
-            <name>nexus Repository</name>
-            <url>http://120.27.218.59:8081/repository/maven-public/</url>
+            <id>nexus3</id>
+            <url>http://nexus.shumaidata.com/repository/maven-public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -60,5 +57,18 @@
             </snapshots>
         </repository>
     </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nexus3</id>
+            <url>http://nexus.shumaidata.com/repository/maven-public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>

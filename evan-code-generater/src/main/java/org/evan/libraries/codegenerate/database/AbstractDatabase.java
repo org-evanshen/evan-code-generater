@@ -61,10 +61,10 @@ public abstract class AbstractDatabase implements Database {
 			if (tables != null && tables.size() > 0) {
 				StringBuilder sqlTableNames = new StringBuilder();
 				for (String table : tables) {
-					sqlTableNames.append(",'" + table.toUpperCase() + "'");
+					sqlTableNames.append(",'" + table.toLowerCase() + "'");
 				}
 				sqlTableNames.delete(0, 1);
-				sql2.append(" and a.table_name in (" + sqlTableNames.toString() + ")");
+				sql2.append(" and  lower(a.table_name) in (" + sqlTableNames.toString() + ")");
 			}
 
 			ps = getCn().prepareStatement(sql2.toString());
