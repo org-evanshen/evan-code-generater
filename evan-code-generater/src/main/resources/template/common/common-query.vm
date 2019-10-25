@@ -11,7 +11,7 @@ import java.util.Date;
 /**
 *$!{outputor.comment} 查询对象
 */
-public class ${className}QueryDTO extends ${outputor.param.baseQueryClass} implements ${outputor.param.queryInterface}, Serializable {
+public class ${className}QueryDTO extends ${outputor.param.baseQueryClass} implements Serializable {
 	private static final long serialVersionUID = ${outputor.serialVersionUid}1L;
 		
 	##属性
