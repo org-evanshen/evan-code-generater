@@ -9,8 +9,6 @@ if [ ! -n "$version" ]; then
 	read version
 fi
 
-echo "Update version is $version"
+echo "Update version is $version-SNAPSHOT"
 
-mvn versions:set -DnewVersion=$version -pl ./
-
-mvn versions:commit
+mvn versions:set -DnewVersion=${version}-SNAPSHOT -DgenerateBackupPoms=false -pl ./

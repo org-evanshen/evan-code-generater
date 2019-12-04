@@ -9,7 +9,11 @@
 <mapper namespace="${outputor.packageName}.repository.${outputor.className}Mapper">
 	<resultMap id="${objectName}Map" type="${objectName}">
 		#foreach($column in $outputor.columns)
-			#if($column.isPk!="1")<result#else<id#end column="${column.columnName}" property="${column.fieldName}"/>#if($!{column.comment})<!-- $!{column.comment} -->#end#*jdbcType="${column.jdbcDataType}" javaType="${column.dataType}"*#			
+			#if($column.isPk=="1")<id column="${column.columnName}" property="${column.fieldName}"/>#end
+		#end
+
+		#foreach($column in $outputor.columns)
+			#if($column.isPk!="1")<result column="${column.columnName}" property="${column.fieldName}"/>#if($!{column.comment})<!-- $!{column.comment} -->#end#end#*jdbcType="${column.jdbcDataType}" javaType="${column.dataType}"*#
 		#end
 	</resultMap>
 

@@ -46,7 +46,7 @@ public class ${outputor.className}AddUpdateDTO implements Serializable {
 	 *@param ${column.fieldName} -- $!{column.comment}
 	#end
 	*/
-	public ${outputor.className}($outputor.pkParams) {
+	public ${outputor.className}AddUpdateDTO()($outputor.pkParams) {
 		#foreach($column in $outputor.columnPks)
 			this.${column.fieldName} = ${column.fieldName};
 		#end

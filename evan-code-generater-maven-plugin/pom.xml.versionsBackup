@@ -2,16 +2,36 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.evan.libraries</groupId>
+        <artifactId>evan-code-generater-parent</artifactId>
+        <version>1.2-SNAPSHOT</version>
+    </parent>
+
     <groupId>org.evan.libraries</groupId>
-    <artifactId>evan-code-generater-parent</artifactId>
-    <version>1.2</version>
-    <packaging>pom</packaging>
+    <artifactId>evan-code-generater-maven-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.evan.libraries</groupId>
+            <artifactId>evan-code-generater</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
 
-    <modules>
-        <module>evan-code-generater</module>
-        <module>evan-code-generater-maven-plugin</module>
-    </modules>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.6.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.6.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -48,40 +68,14 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.6.0</version>
+            </plugin>
         </plugins>
     </build>
 
-    <repositories>
-        <repository>
-            <id>nexus3</id>
-            <name>nexus Repository</name>
-            <url>http://nexus.shumaidata.com/repository/maven-public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
 
-    <distributionManagement>
-        <!--        <repository>-->
-        <!--            <id>releases</id>-->
-        <!--            <url>http://116.62.106.105:8081/nexus/content/repositories/releases</url>-->
-        <!--        </repository>-->
-        <!--        <snapshotRepository>-->
-        <!--            <id>snapshots</id>-->
-        <!--            <url>http://116.62.106.105:8081/nexus/content/repositories/snapshots</url>-->
-        <!--        </snapshotRepository>-->
-        <repository>
-            <id>nexus-releases</id>
-            <url>http://nexus.shumaidata.com/repository/maven-releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <url>http://nexus.shumaidata.com/repository/maven-snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>

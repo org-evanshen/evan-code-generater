@@ -48,6 +48,6 @@ public class OrmCreatorUtil {
     }
 
     public static String convertTableNameToSubPackageName(String tableName) {
-        return tableName.replace("_", "-").toLowerCase();
+        return tableName.replace("_", "").toLowerCase();
     }
 }
