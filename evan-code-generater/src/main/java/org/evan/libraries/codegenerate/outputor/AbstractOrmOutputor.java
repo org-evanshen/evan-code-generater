@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -172,6 +174,13 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
         template = ormTemplatePath + "ui/page-vue-service.vm";
         str = mergeTemplateToString(template, mapOutputor);
         write("vue/service/", fileName + "Service.vue", str);
+    }
+
+    public void outAll(List<OutputModel> outputModels) {
+        String template = ormTemplatePath + "db-design/dbDesign.vm";
+        Map map = new HashMap();
+        map.put("tables", outputModels);
+        mergeTemplate(map, template, "", "dbDesign.html");
     }
 
     private File getTargetFile(String path, String file) {

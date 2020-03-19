@@ -4,6 +4,7 @@ import org.evan.libraries.codegenerate.model.OrmCreatorParam;
 import org.evan.libraries.codegenerate.model.OutputModel;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OrmOutputor {
@@ -28,7 +29,12 @@ public class OrmOutputor {
 		innerOrmOutputor.outPut(outputor, mapOutputor);
 	}
 
+	public void outAll(List<OutputModel> outputModels) {
+		innerOrmOutputor.outAll(outputModels);
+	}
+
 	public interface InnerOrmOutputor {
 		void outPut(OutputModel outputor, Map<String, Object> mapOutputor);
+		void outAll(List<OutputModel> outputModels);
 	}
 }
