@@ -13,7 +13,7 @@ public class OrmOutputorMybatis extends AbstractOrmOutputor implements OrmOutput
     }
 
     @Override
-    public void outPut(OutputModel outputor, Map<String, Object> mapOutputor) {
+    public void outputByTable(OutputModel outputor, Map<String, Object> mapOutputor) {
         String template;
 
         outputCommon(outputor, mapOutputor);

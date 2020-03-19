@@ -48,55 +48,7 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
         velocityEngine.init();
     }
 
-    public abstract void outPut(OutputModel outputor, Map<String, Object> mapOutputor);
-
-    protected void write(String path, String file, String content) {
-        File outFile = getTargetFile(path, file);
-        PrintWriter out = null;
-        try {
-            outFile.createNewFile();
-            //fos = new FileOutputStream(outFile);
-            //osw = new OutputStreamWriter(fos, param.getEncoding());
-            out = new PrintWriter(outFile, param.getEncoding());
-            out.write(content);
-            LOGGER.info("output:{}", outFile);
-        } catch (IOException e) {
-            throw new UnsupportedOperationException(e);
-        } finally {
-            if (out != null) {
-                out.close();
-            }
-        }
-    }
-
-
-    protected String mergeTemplateToString(String templateLocation, Map<String, Object> model) {
-        StringWriter writer = new StringWriter();
-        VelocityContext velocityContext = new VelocityContext(model);
-        velocityEngine.mergeTemplate(templateLocation, param.getEncoding(), velocityContext, writer);
-        return writer.toString();
-    }
-
-    protected void mergeTemplate(Map<String, Object> model, String templateLocation, String targetDir, String targetFile) {
-//        String writer = null;
-//        File targetPath = getTargetFile(targetDir, targetFile);
-//
-//        try {
-//            writer = new FileWriter(targetPath);
-//        } catch (IOException ex) {
-//            LOGGER.error(ex.getMessage(), ex);
-//        }
-//
-//        VelocityContext velocityContext = new VelocityContext(model);
-//        velocityEngine.mergeTemplate(templateLocation, param.getEncoding(), velocityContext, writer);
-        String content = mergeTemplateToString(templateLocation, model);
-        write(targetDir, targetFile, content);
-//        LOGGER.info("output: {}",targetPath);
-    }
-
-    protected VelocityEngine getVelocityEngine() {
-        return velocityEngine;
-    }
+    public abstract void outputByTable(OutputModel outputor, Map<String, Object> mapOutputor);
 
     /**
      * <p>
@@ -176,11 +128,58 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
         write("vue/service/", fileName + "Service.vue", str);
     }
 
-    public void outAll(List<OutputModel> outputModels) {
+    public void outputAllTabls(List<OutputModel> outputModels) {
         String template = ormTemplatePath + "db-design/dbDesign.vm";
         Map map = new HashMap();
         map.put("tables", outputModels);
         mergeTemplate(map, template, "", "dbDesign.html");
+    }
+
+    protected void write(String path, String file, String content) {
+        File outFile = getTargetFile(path, file);
+        PrintWriter out = null;
+        try {
+            outFile.createNewFile();
+            //fos = new FileOutputStream(outFile);
+            //osw = new OutputStreamWriter(fos, param.getEncoding());
+            out = new PrintWriter(outFile, param.getEncoding());
+            out.write(content);
+            LOGGER.info("output:{}", outFile);
+        } catch (IOException e) {
+            throw new UnsupportedOperationException(e);
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
+
+    protected String mergeTemplateToString(String templateLocation, Map<String, Object> model) {
+        StringWriter writer = new StringWriter();
+        VelocityContext velocityContext = new VelocityContext(model);
+        velocityEngine.mergeTemplate(templateLocation, param.getEncoding(), velocityContext, writer);
+        return writer.toString();
+    }
+
+    protected void mergeTemplate(Map<String, Object> model, String templateLocation, String targetDir, String targetFile) {
+//        String writer = null;
+//        File targetPath = getTargetFile(targetDir, targetFile);
+//
+//        try {
+//            writer = new FileWriter(targetPath);
+//        } catch (IOException ex) {
+//            LOGGER.error(ex.getMessage(), ex);
+//        }
+//
+//        VelocityContext velocityContext = new VelocityContext(model);
+//        velocityEngine.mergeTemplate(templateLocation, param.getEncoding(), velocityContext, writer);
+        String content = mergeTemplateToString(templateLocation, model);
+        write(targetDir, targetFile, content);
+//        LOGGER.info("output: {}",targetPath);
+    }
+
+    protected VelocityEngine getVelocityEngine() {
+        return velocityEngine;
     }
 
     private File getTargetFile(String path, String file) {

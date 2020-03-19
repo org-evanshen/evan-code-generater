@@ -11,7 +11,7 @@ public class OrmOutputorHibernate extends AbstractOrmOutputor implements OrmOutp
 		super(param);
 	}
 
-	public void outPut(OutputModel outputor, Map<String, Object> mapOutputor) {
+	public void outputByTable(OutputModel outputor, Map<String, Object> mapOutputor) {
 		String poTemplate;	
 
 		if (outputor.getColumnPks().size() <= 1) {

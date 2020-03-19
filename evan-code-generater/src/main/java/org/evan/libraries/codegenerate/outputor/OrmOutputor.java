@@ -23,18 +23,30 @@ public class OrmOutputor {
 		}
 	}
 
-	public void outPub(OutputModel outputor) {
+	/**
+	 * 根据单张表输出
+	 * @param outputor
+	 */
+	public void outputByTable(OutputModel outputor) {
 		Map<String, Object> mapOutputor = new HashMap<String, Object>();
 		mapOutputor.put("outputor", outputor);
-		innerOrmOutputor.outPut(outputor, mapOutputor);
+		innerOrmOutputor.outputByTable(outputor, mapOutputor);
 	}
 
-	public void outAll(List<OutputModel> outputModels) {
-		innerOrmOutputor.outAll(outputModels);
+	/**
+	 * 根据所有表输出
+	 * @param outputModels
+	 */
+	public void outputAllTabls(List<OutputModel> outputModels) {
+		innerOrmOutputor.outputAllTabls(outputModels);
 	}
 
 	public interface InnerOrmOutputor {
-		void outPut(OutputModel outputor, Map<String, Object> mapOutputor);
-		void outAll(List<OutputModel> outputModels);
+		void outputByTable(OutputModel outputor, Map<String, Object> mapOutputor);
+		void outputAllTabls(List<OutputModel> outputModels);
+	}
+
+	public InnerOrmOutputor getInnerOrmOutputor() {
+		return innerOrmOutputor;
 	}
 }

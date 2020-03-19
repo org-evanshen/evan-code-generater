@@ -36,20 +36,27 @@ public class OrmCreator {
      **/
     private Database database = null;
 
+    private OrmOutputor ormOutputor;
+
     /**
      * @param param
      * @throws Exception
      */
     public void create(OrmCreatorParam param) {
+        this.param = param;
+        database = DatabaseFactory.getDatabase(param.getDatabaseType(), param);
+
+        ormOutputor = new OrmOutputor(param);
+
         LOGGER.info(">>>>>>>>>>>>>>>>>>>>Begin generate>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         LOGGER.info("JdbcUrl: {}", param.getJdbcUrl());
         LOGGER.info("JdbcUser: {}", param.getJdbcUser());
         LOGGER.info("Schema: {}", param.getDatabaseSchema());
         LOGGER.info("Tables: {}", param.getTables());
         LOGGER.info("TargetDir: {}", param.getOutDir());
+        LOGGER.info("DatabaseType: {}", database.getClass());
+        LOGGER.info("OrmOutputor: {}", ormOutputor.getInnerOrmOutputor().getClass());
         LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-        this.param = param;
 
         List<OutputModel> ormTempletesForOut = getOrmTempletes(param);
 
@@ -65,7 +72,6 @@ public class OrmCreator {
      * @param param
      */
     private List<OutputModel> getOrmTempletes(OrmCreatorParam param) {
-        database = DatabaseFactory.getDatabase(param.getDatabaseType(), param);
         database.openConn();
         ResultSet rs = database.getTables(param.getTables());
         // 创建输出对象集合，一个表一个对象
@@ -94,22 +100,18 @@ public class OrmCreator {
      * version: 2012-1-13 下午12:40:39 <br>
      */
     private void output(List<OutputModel> ormTempletesForOut) {
-        OrmOutputor ormOutputor = new OrmOutputor(param);
-
-        ormOutputor.outAll(ormTempletesForOut);
+        LOGGER.info("");
+        LOGGER.info(">>>>>>>>>>>>>>>>> generate: [AllTabls]>>>>>>>>>>>>>>>>>>>>>>>");
+        ormOutputor.outputAllTabls(ormTempletesForOut);
 
         Random random = new Random(4);
         for (OutputModel o : ormTempletesForOut) {
-            // System.out.println("=================" + outputor.getTableName()
-            // + "=================");
-            // logger.info("==========================");
-
             LOGGER.info("");
             LOGGER.info(">>>>>>>>>>>>>>>>> generate: [{}]>>>>>>>>>>>>>>>>>>>>>>>", o.getTableName());
 
             o.setSerialVersionUid(System.currentTimeMillis() + random.nextInt());
 
-            ormOutputor.outPub(o);
+            ormOutputor.outputByTable(o);
         }
     }
 
@@ -138,6 +140,37 @@ public class OrmCreator {
         pubColumnsDataToOrmTemplete(table.getTableName(), ormTemplete);
 
         return ormTemplete;
+    }
+
+    /**
+     * 填充一个表的表对象 到OrmTemplete
+     * <p>
+     * author: <a href="mailto:shenw@hundsun.com">Evan.Shen</a><br>
+     * version: 2012-1-13 下午1:21:15 <br>
+     *
+     * @param tableName
+     * @param tableComment
+     * @param ormTemplete
+     */
+    private void pubTableDataToOrmTemplete(String tableName, String tableComment, OutputModel ormTemplete) {
+        String className = OrmCreatorUtil.convertDbNameToJavaName(tableName);// 表名装换成类名
+        String prefixRemove = this.param.getPrefixRemove();
+        if (StringUtils.isNotBlank(prefixRemove)) { // 是否去掉前缀
+            int length = prefixRemove.length();
+            String classNamePrefix = className.substring(0, length);
+            if (StringUtils.endsWithIgnoreCase(classNamePrefix, prefixRemove)) {
+                className = className.substring(length);
+            }
+        }
+
+        String objectName = OrmCreatorUtil.toFirstCharLow(className);// 类名装换对象名，即将首字母改为小写
+
+        ormTemplete.setTableName(tableName);
+        ormTemplete.setClassName(className);
+        ormTemplete.setObjectName(objectName);
+        ormTemplete.setComment(tableComment); // 表注释
+        ormTemplete.setTableAlias(OrmCreatorUtil.convertTableNameToTableAlias(tableName));
+        ormTemplete.setPackageName(this.param.getPackageNameRoot() + "." + OrmCreatorUtil.convertTableNameToSubPackageName(tableName));
     }
 
     /**
@@ -218,38 +251,5 @@ public class OrmCreator {
         ormTemplete.setPkFieldNames(pkFieldNames.toString());
         ormTemplete.setPkIbatisDataType(pkIbatisDataType);
         ormTemplete.setPkJavaDataType(pkJavaDataType);
-    }
-
-    /**
-     * 填充一个表的表对象 到OrmTemplete
-     * <p>
-     * author: <a href="mailto:shenw@hundsun.com">Evan.Shen</a><br>
-     * version: 2012-1-13 下午1:21:15 <br>
-     *
-     * @param tableName
-     * @param tableComment
-     * @param ormTemplete
-     */
-    private void pubTableDataToOrmTemplete(String tableName, String tableComment, OutputModel ormTemplete) {
-        String className = OrmCreatorUtil.convertDbNameToJavaName(tableName);// 表名装换成类名
-        String prefixRemove = this.param.getPrefixRemove();
-        if (StringUtils.isNotBlank(prefixRemove)) { // 是否去掉前缀
-            int length = prefixRemove.length();
-            String classNamePrefix = className.substring(0, length);
-            if (StringUtils.endsWithIgnoreCase(classNamePrefix, prefixRemove)) {
-                className = className.substring(length);
-            }
-        }
-
-        String objectName = OrmCreatorUtil.toFirstCharLow(className);// 类名装换对象名，即将首字母改为小写
-
-        ormTemplete.setTableName(tableName);
-        ormTemplete.setClassName(className);
-        ormTemplete.setObjectName(objectName);
-        ormTemplete.setComment(tableComment); // 表注释
-        ormTemplete.setTableAlias(OrmCreatorUtil.convertTableNameToTableAlias(tableName));
-        ormTemplete.setPackageName(this.param.getPackageNameRoot() + "." + OrmCreatorUtil.convertTableNameToSubPackageName(tableName));
-
-
     }
 }

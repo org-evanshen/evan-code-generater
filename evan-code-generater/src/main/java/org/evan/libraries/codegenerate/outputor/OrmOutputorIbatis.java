@@ -10,7 +10,7 @@ public class OrmOutputorIbatis extends AbstractOrmOutputor implements OrmOutputo
 		super(param);
 	}
 
-	public void outPut(OutputModel outputor, Map<String, Object> mapOutputor) {
+	public void outputByTable(OutputModel outputor, Map<String, Object> mapOutputor) {
 		String template;
 
 		outputCommon(outputor, mapOutputor);

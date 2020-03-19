@@ -11,7 +11,7 @@ public class OrmOutputorJdbc extends AbstractOrmOutputor implements OrmOutputor.
 		super(param);
 	}
 
-	public void outPut(OutputModel outputor, Map<String, Object> mapOutputor) {
+	public void outputByTable(OutputModel outputor, Map<String, Object> mapOutputor) {
 		String template;
 
 		String dataBaseType = outputor.getParam().getDatabaseType().name();
