@@ -1,6 +1,9 @@
 package ${outputor.packageName};
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,7 +11,8 @@ import java.util.Date;
 /**
 *$!{outputor.comment}数据库持久化对象
 */
-@ApiModel("$!{$!{outputor.comment}}")
+##@ApiModel("$!{$!{outputor.comment}}")
+@Data
 public class ${outputor.className} implements Serializable {
 	private static final long serialVersionUID = ${outputor.serialVersionUid}2L;
 	#*#foreach($column in $outputor.columns)
@@ -18,9 +22,12 @@ public class ${outputor.className} implements Serializable {
 	##属性
 	#foreach($column in $outputor.columns)
 		##@Column(name = ${column.columnName})
+
+		#if("$column.isPk" == "1")
+		@TableId(type = IdType.AUTO)
+		#end
     	@ApiModelProperty(value = "$!column.comment")
 		private ${column.dataType} ${column.fieldName};//$!column.comment
-
 	#end	
 	
 	#*
@@ -53,6 +60,7 @@ public class ${outputor.className} implements Serializable {
 	}
 
 	##gettor settor
+	#*
 	#foreach($column in $outputor.columns)
 	/**$!column.comment*/
 	public $column.dataType get${column.fieldNameFirstCharUpcase}() {
@@ -68,4 +76,5 @@ public class ${outputor.className} implements Serializable {
 	public String toString() {
 		return "${outputor.className} [#foreach($column in $outputor.columns)#if($foreach.count>1),#end ${column.fieldName}=" + ${column.fieldName} + "#end]";
 	}
+	*#
 }

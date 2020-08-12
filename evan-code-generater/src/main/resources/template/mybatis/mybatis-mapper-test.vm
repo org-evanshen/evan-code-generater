@@ -16,51 +16,67 @@ public class ${className}MapperTest extends MySQLTestCaseSupport   {
 	private ${className}Mapper ${objectName}Mapper;
 
 	@Test
-	public void testSelectById() {
-		${className} ${objectName} = ${objectName}Mapper.selectById(RandomUtils.nextLong(1,5));
-		log.info("=======>> testSelectById " + ${objectName});
-	}
-
-	@Test
-	public void testSelectBatchByIds() {
-		List idList = new ArrayList();
-		idList.add(RandomUtils.nextLong(1,60));
-		idList.add(RandomUtils.nextLong(1,80));
-		List<${className}> demos = ${objectName}Mapper.selectBatchByIds(idList);
-
-		LOGGER.info(">>>> testSelectBatchByIds({})={}", idList, demos);
-	}
-
-	@Test
 	public void testInsert() {
 		${className} ${objectName} = new ${className}();
 
 		${objectName}Mapper.insert(${objectName});
-        log.info("=======>> testInsert " + ${objectName});
+		log.info("=======>> testInsert " + ${objectName});
+	}
+
+	@Test
+	public void testUpdateById() {
+		${className} ${objectName} = new ${className}();
+
+		${objectName}.setId(RandomUtils.nextLong(1,5));
+
+		${objectName}Mapper.updateById(${objectName});
 	}
 
 	@Test
 	public void testUpdate() {
 		${className} ${objectName} = new ${className}();
 
-		${objectName}.setId(RandomUtils.nextLong(1,5));
+		UpdateWrapper<${className}> updateWrapper = new UpdateWrapper();
+		//updateWrapper.set("field_radio", 2);
+		//updateWrapper.eq("id", RandomDataUtil.randomLong(1000));
 
-		${objectName}Mapper.update(${objectName});
+		${objectName}Mapper.update(${objectName}, updateWrapper);
+	}
+
+##	@Test
+##	public void testUpdateStatus() {
+##		${objectName}Mapper.updateStatus(RandomUtils.nextLong(1,5), 2);
+##	}
+##
+##	@Test
+##	public void testUpdateIsDeleted() {
+##		${objectName}Mapper.updateIsDeleted(RandomUtils.nextLong(1,5), 1);
+##	}
+
+	@Test
+	public void testDeleteById() {
+		${objectName}Mapper.deleteById(RandomUtils.nextLong(1,5));
+	}
+
+##	@Test
+##	public void testDelete() {
+##		${objectName}Mapper.delete(1L);
+##	}
+
+	@Test
+	public void testSelectById() {
+		${className} ${objectName} = ${objectName}Mapper.selectById(RandomUtils.nextLong(1,5));
+		log.info("=======>> testSelectById " + ${objectName});
 	}
 
 	@Test
-	public void testUpdateStatus() {
-		${objectName}Mapper.updateStatus(RandomUtils.nextLong(1,5), 2);
-	}
+	public void testSelectBatchIds() {
+		List idList = new ArrayList();
+		idList.add(RandomUtils.nextLong(1,60));
+		idList.add(RandomUtils.nextLong(1,80));
+		List<${className}> demos = ${objectName}Mapper.selectBatchIds(idList);
 
-    @Test
-    public void testUpdateIsDeleted() {
-        ${objectName}Mapper.updateIsDeleted(RandomUtils.nextLong(1,5), 1);
-    }
-
-	@Test
-	public void testDelete() {
-		${objectName}Mapper.delete(1L);
+		log.info(">>>> testSelectBatchIds({})={}", idList, demos);
 	}
 
 	@Test
@@ -80,4 +96,13 @@ public class ${className}MapperTest extends MySQLTestCaseSupport   {
 
         log.info("=======>> testQueryCount " + count);
 	}
+
+	@Test
+	public void testQueryForPage() {
+		${className}QueryDTO query = new ${className}QueryDTO();
+
+		PageResult<${className}> pageResult = ${objectName}Mapper.queryPage(query);
+
+		log.info(">>>> testQueryForPage:" + pageResult);
+   }
 }

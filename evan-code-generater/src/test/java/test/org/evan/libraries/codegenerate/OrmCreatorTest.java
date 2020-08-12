@@ -41,9 +41,8 @@ public class OrmCreatorTest {
         // 生成的表 可选 不提供该参数则生成全部表
         List<String> tables = new ArrayList<String>();
         tables.add("demo");
-//        tables.add("demo_child1");
-//        tables.add("pub_attach");
-//        tables.add("pub_picture");
+//        tables.add("biz_category_price");
+//        tables.add("customer_data_bill");
         param.setTables(tables);
 
         OrmCreator ormCreator = new OrmCreator();

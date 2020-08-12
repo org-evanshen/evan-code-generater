@@ -7,7 +7,8 @@ import java.io.Serializable;
 #set($className=${outputor.className})
 #set($objectName=$outputor.objectName)
 
-public interface ${className}Mapper  {
+public interface ${className}Mapper extends BaseMapper<${className}>  {
+	#*
 	/***/
 	${className} selectById(${outputor.pkJavaDataType} id);
 
@@ -29,6 +30,7 @@ public interface ${className}Mapper  {
 
 	/***/
 	void delete(${outputor.pkJavaDataType} id);
+	*#
 
 	/***/
 	List<${className}> queryList(${className}QueryDTO ${objectName}Query);

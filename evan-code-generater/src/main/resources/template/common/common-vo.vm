@@ -5,9 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
+import lombok.Data;
+
 /**
 *$!{outputor.comment}输出对象
 */
+@Data
 ##extends ${outputor.param.basePoName}
 public class ${outputor.className}VO extends ${outputor.className} {
 	@Override
