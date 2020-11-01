@@ -20,9 +20,9 @@ public class ${outputor.className}AddUpdateDTO implements Serializable {
 	##属性
 	#foreach($column in $outputor.columns)
 		##@Column(name = ${column.columnName})
-    	@ApiModelProperty(value = "$!column.comment")
-		private ${column.dataType} ${column.fieldName};   //$!column.comment
 
+		@ApiModelProperty(value = "$!column.comment")
+		private ${column.dataType} ${column.fieldName};   //$!column.comment
 	#end	
 	
 	#*
@@ -48,7 +48,7 @@ public class ${outputor.className}AddUpdateDTO implements Serializable {
 	 *@param ${column.fieldName} -- $!{column.comment}
 	#end
 	*/
-	public ${outputor.className}AddUpdateDTO()($outputor.pkParams) {
+	public ${outputor.className}AddUpdateDTO($outputor.pkParams) {
 		#foreach($column in $outputor.columnPks)
 			this.${column.fieldName} = ${column.fieldName};
 		#end

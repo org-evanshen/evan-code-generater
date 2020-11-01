@@ -4,7 +4,7 @@
 
     <groupId>org.evan.libraries</groupId>
     <artifactId>evan-code-generater-parent</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
 

@@ -64,22 +64,22 @@ public abstract class AbstractOrmOutputor implements OrmOutputor.InnerOrmOutputo
         String template;
 
         template = ormTemplatePath + "common/common-po.vm";
-        mergeTemplate(mapOutputor, template, subPath, outputor.getClassName() + ".java");
+        mergeTemplate(mapOutputor, template, "model/" +  subPath, outputor.getClassName() + ".java");
 
         template = ormTemplatePath + "common/common-query.vm";
         String str = mergeTemplateToString(template, mapOutputor);
-        write(subPath, outputor.getClassName() + "QueryDTO.java", str);
+        write("model/" +  subPath, outputor.getClassName() + "QueryDTO.java", str);
 
         template = ormTemplatePath + "common/common-addupdate.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write(subPath, outputor.getClassName() + "AddUpdateDTO.java", str);
+        write("model/" +  subPath, outputor.getClassName() + "AddUpdateDTO.java", str);
 
         template = ormTemplatePath + "common/common-vo.vm";
         str = mergeTemplateToString(template, mapOutputor);
-        write(subPath, outputor.getClassName() + "VO.java", str);
+        write("model/" +  subPath, outputor.getClassName() + "VO.java", str);
 
         template = ormTemplatePath + "common/common-list.vm";
-        mergeTemplate(mapOutputor, template, subPath, outputor.getClassName() + "VOList.java");
+        mergeTemplate(mapOutputor, template, "model/" +  subPath, outputor.getClassName() + "VOList.java");
 
 //        template = ormTemplatePath + "common-response.vm";
 //        str = mergeTemplateToString(template, mapOutputor);
