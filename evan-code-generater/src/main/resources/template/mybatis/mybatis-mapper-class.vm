@@ -1,8 +1,10 @@
 package ${outputor.packageName}.repository;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import java.io.Serializable;
 
 #set($className=${outputor.className})
 #set($objectName=$outputor.objectName)
@@ -33,24 +35,31 @@ public interface ${className}Mapper extends BaseMapper<${className}>  {
 	*#
 
 	/***/
-	List<${className}> queryList(${className}QueryDTO ${objectName}Query);
+	List<${className}> queryList(${className}QueryDTO query);
 
 	/***/
-	int queryCount(${className}QueryDTO ${objectName}QueryDTO);
+	int queryCount(${className}QueryDTO query);
 
-	default PageResult<${className}> queryPage(${className}QueryDTO ${objectName}QueryDTO) {
-		if (${objectName}QueryDTO.getPageSize() == 0) {
-			${objectName}QueryDTO.setPageSize(${className}QueryDTO.DEFAULT_PAGE_SIZE);
+	default PageResult<${className}> queryPage(${className}QueryDTO query) {
+		if (query.getPageSize() == 0) {
+			query.setPageSize(${className}QueryDTO.DEFAULT_PAGE_SIZE);
 		}
-		int recordCount = queryCount(${objectName}QueryDTO);
 
-		PageResult<${className}> pageResult = new PageResult<>(${objectName}QueryDTO);
-		if (recordCount > 0) {
-			List<${className}> list = queryList(${objectName}QueryDTO);
-			pageResult.setData(list);
-		}
-		pageResult.setRecordCount(recordCount);
+		Page<${className}> page = PageHelper.startPage(query.getPageNo(), query.getPageSize());
+		List<${className}> list = queryList(query);
 
-		return pageResult;
+		return PageResult.create(query, list, page.getTotal());
 	}
 }
+
+
+##		int recordCount = queryCount(${objectName}QueryDTO);
+##
+##		PageResult<${className}> pageResult = new PageResult<>(${objectName}QueryDTO);
+##		if (recordCount > 0) {
+##			List<${className}> list = queryList(${objectName}QueryDTO);
+##			pageResult.setData(list);
+##		}
+##		pageResult.setRecordCount(recordCount);
+
+##return pageResult;

@@ -115,9 +115,9 @@ ${tableAlias}.${column.columnName}##
 		</choose>
 		<include refid="queryCommonSql" />
 		<include refid="sortSql" />
-        <if test="pageSize > 0">
-            limit ${startRow},${pageSize}
-        </if>
+        ##<if test="pageSize > 0">
+            ##limit ${startRow},${pageSize}
+        ##</if>
 		## <include refid="common.pageEnd" />
 	</select>
 
